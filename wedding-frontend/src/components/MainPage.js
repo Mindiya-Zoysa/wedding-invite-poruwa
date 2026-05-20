@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import ProgramModal from './ProgramModal';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { MapPin, CalendarPlus, CheckCircle, Copy, Camera, Users, Heart, Mail, ArrowUp, Trash2, Sparkles, BookOpen, Music, Calendar } from 'lucide-react';
+import { MapPin, CalendarPlus, CheckCircle, Copy, Camera, Users, Heart, Mail, ArrowUp, Trash2, Sparkles, Music } from 'lucide-react';
 
 // IMPORTANT: Import your images here! 
 const HERO_IMAGE = "beautiful-bouquet-wild-flowers-hands-bride.jpg"; 
