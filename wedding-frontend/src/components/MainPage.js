@@ -565,8 +565,8 @@ const MainPage = ({ onGoToProgram }) => {
 
         <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '40px 20px', boxShadow: '0 15px 30px rgba(0,0,0,0.05)' }}>
           <MapPin size={32} color="#B59461" style={{ margin: '0 auto 15px auto' }} />
-          <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#333', marginBottom: '5px' }}>All Saints' Church</h3>
-          <p style={{ color: '#666', fontSize: '14px', marginBottom: '20px' }}>96 Ananda Rajakaruna Mawatha, Colombo 08, Sri Lanka.</p>
+          <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#333', marginBottom: '5px' }}>Lavenro Garden Hotel</h3>
+          <p style={{ color: '#666', fontSize: '14px', marginBottom: '20px' }}>Highlevel Road, Kosgama, Avissawella, Sri Lanka.</p>
           
           <div style={{ display: 'inline-block', border: '1px solid #EAEAEA', padding: '8px 20px', borderRadius: '20px', fontSize: '13px', color: '#888', marginBottom: '30px' }}>
             📅 5:30 PM to 11:59 PM
@@ -574,8 +574,8 @@ const MainPage = ({ onGoToProgram }) => {
 
           <div style={{ width: '100%', height: '300px', borderRadius: '8px', overflow: 'hidden', marginBottom: '30px', border: '1px solid #EAEAEA' }}>
             <iframe 
-              title="All Saints Church Location"
-              src="https://maps.google.com/maps?q=All%20Saints'%20Church,%20Borella&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+              title="Lavenro Garden Hotel - Kosgama Location"
+              src="https://maps.google.com/maps?q=Lavenro+Garden+Hotel,%20Kosgama&t=&z=15&ie=UTF8&iwloc=&output=embed" 
               width="100%" 
               height="100%" 
               style={{ border: 0 }} 
@@ -586,7 +586,7 @@ const MainPage = ({ onGoToProgram }) => {
 
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '15px' }}>
             <a 
-              href="https://www.google.com/maps/search/?api=1&query=All+Saints+Church+Borella" 
+              href="https://www.google.com/maps/search/?api=1&query=Lavenro+Garden+Hotel+Kosgama" 
               target="_blank" 
               rel="noreferrer"
               style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#B59461', color: 'white', padding: '12px 25px', borderRadius: '5px', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}
@@ -595,7 +595,7 @@ const MainPage = ({ onGoToProgram }) => {
             </a>
             
             <a 
-              href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Yashara+%26+Anuruddha&dates=20260724T083000/20260724T113000&details=We+can't+wait+to+celebrate+with+you!&location=All+Saints'+Church,+Borella,+Sri+Lanka" 
+              href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Yashara+%26+Anuruddha&dates=20260803T173000/20260803T235900&details=We+can't+wait+to+celebrate+with+you!&location=Lavenro+Garden+Hotel,+Kosgama,+Awissawella,+Sri+Lanka" 
               target="_blank" 
               rel="noreferrer"
               style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: 'transparent', color: '#B59461', border: '1px solid #B59461', padding: '12px 25px', borderRadius: '5px', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}
@@ -1136,8 +1136,8 @@ const MainPage = ({ onGoToProgram }) => {
               
               <div style={{ flex: 1, textAlign: 'center' }}>
                 <MapPin size={22} color="#B59461" style={{ marginBottom: '8px' }} />
-                <p style={{ fontSize: '12px', margin: '0 0 4px 0', fontWeight: 'bold' }}>All Saints' Church</p>
-                <p style={{ fontSize: '11px', margin: 0, color: '#888' }}>Borella</p>
+                <p style={{ fontSize: '12px', margin: '0 0 4px 0', fontWeight: 'bold' }}>Lavenro Garden Hotel</p>
+                <p style={{ fontSize: '11px', margin: 0, color: '#888' }}>Kosgama</p>
               </div>
 
             </div>
