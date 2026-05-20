@@ -7,7 +7,7 @@ import jsPDF from 'jspdf';
 import { MapPin, CalendarPlus, CheckCircle, Copy, Camera, Users, Heart, Mail, ArrowUp, Trash2, Sparkles, BookOpen, Music, Calendar } from 'lucide-react';
 
 // IMPORTANT: Import your images here! 
-const HERO_IMAGE = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDimMG5ON_9I08nKj9s62ph8AzV-qTtGS8_Q&s"; 
+const HERO_IMAGE = "beautiful-bouquet-wild-flowers-hands-bride.jpg"; 
 const YASARA_PIC = "3d-cartoon-style-character_23-2151034069.avif";
 const ANURUDDHA_PIC = "Gemini_Generated_Image_ia7lbxia7lbxia7l.png";
 const PORUWA_WEDDING_INVITATION = "poruwa_wedding_invitation.jpeg"
@@ -328,7 +328,7 @@ const MainPage = ({ onGoToProgram }) => {
     };
 
     Swal.fire({
-      title: '<span style="font-family: serif; font-size: 28px; color: #B59461;">Church Seating</span>',
+      title: '<span style="font-family: serif; font-size: 28px; color: #B59461;">Seating Arrangement</span>',
       html: `
         <div style="font-family: sans-serif; color: #555; padding: 0 10px; max-height: 75vh; overflow-y: auto; overflow-x: auto;">
           
@@ -338,49 +338,9 @@ const MainPage = ({ onGoToProgram }) => {
               <div style="flex: 1 1 0;"></div> <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
                 <div style="width: 20px; height: 24px; border: 1.5px solid #888; border-top-left-radius: 8px; border-top-right-radius: 8px; margin-bottom: 5px;"></div>
                 <div style="background-color: #B59461; color: white; padding: 12px 50px; border-radius: 6px; font-weight: bold; font-size: 13px; letter-spacing: 2px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                  PRIEST & ALTAR
+                  Will be inform you later.
                 </div>
-                <div style="display: flex; gap: 15px; margin-top: 8px;">
-                  <div style="width: 20px; height: 24px; border: 2.5px solid #B59461; border-top-left-radius: 8px; border-top-right-radius: 8px; background-color: #f9f6f0;" title="Bride"></div>
-                  <div style="width: 20px; height: 24px; border: 2.5px solid #B59461; border-top-left-radius: 8px; border-top-right-radius: 8px; background-color: #f9f6f0;" title="Groom"></div>
-                </div>
-                <p style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin: 8px 0 0 0; font-weight: bold; color: #333;">Bride & Groom</p>
               </div>
-
-              <div style="flex: 1 1 0;"></div> </div>
-
-            <div style="display: flex; justify-content: center; gap: 15px; position: relative;">
-              
-              <div style="flex: 1 1 0; text-align: center;">
-                <p style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 20px 0; border-bottom: 1px solid #EAEAEA; padding-bottom: 10px;">Bride's Side</p>
-
-                <p style="font-size: 11px; font-weight: bold; color: #B59461; text-transform: uppercase; margin: 25px 0 10px 0;">Parents & Family</p>
-                ${generateSeats(3, 5)}
-
-                <p style="font-size: 11px; font-weight: bold; color: #B59461; text-transform: uppercase; margin: 25px 0 10px 0;">Family & Relatives</p>
-                ${generateSeats(3, 6)}
-
-                <p style="font-size: 11px; font-weight: bold; color: #B59461; text-transform: uppercase; margin: 25px 0 10px 0;">Friends & Guests</p>
-                ${generateSeats(3, 6)}
-              </div>
-
-              <div style="width: 40px; display: flex; justify-content: center;">
-                <div style="height: 100%; width: 2px; background-color: rgba(181, 148, 97, 0.2); border-radius: 2px;"></div>
-              </div>
-
-              <div style="flex: 1 1 0; text-align: center;">
-                <p style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 20px 0; border-bottom: 1px solid #EAEAEA; padding-bottom: 10px;">Groom's Side</p>
-
-                <p style="font-size: 11px; font-weight: bold; color: #B59461; text-transform: uppercase; margin: 25px 0 10px 0;">Parents & Family</p>
-                ${generateSeats(3, 5)}
-
-                <p style="font-size: 11px; font-weight: bold; color: #B59461; text-transform: uppercase; margin: 25px 0 10px 0;">Family & Relatives</p>
-                ${generateSeats(3, 6)}
-
-                <p style="font-size: 11px; font-weight: bold; color: #B59461; text-transform: uppercase; margin: 25px 0 10px 0;">Friends & Guests</p>
-                ${generateSeats(3, 6)}
-              </div>
-
             </div>
           </div>
         </div>
@@ -437,11 +397,11 @@ const MainPage = ({ onGoToProgram }) => {
   // --- TIMELINE DATA ARRAY ---
   // We define this here so the JSX below stays clean and easy to read
   const timelineEvents = [
-    { title: "ඔන්න හවස 5.30 වෙද්දි ඇවිල්ලා ඉන්න ඕන", desc: "", action: showSeating, actionText: "ඔයාටම වෙන්කරපු තැන බලාගන්න", actionIcon: <Users size={14} /> },
+    { title: "ඔන්න හවස 5.30 වෙද්දි ඇවිල්ලා ඉන්න ඕන", desc: "", action: showSeating, actionText: "ඔයාටම වෙන්කරපු තැන බලාගන්න", actionIcon: <Users size={45} /> },
     { title: "6.00 වෙද්දී අපි පෝරුවට නගිනවා", desc: "Pool Area පැත්තට එන්න" },
     { title: "6.47 වෙද්දී අපි පෝරුවෙන් බහිනවා", desc: "" },
     { title: "ඔන්න රෑ 7.00 වෙද්දි අපි ශාලාව ඇතුලට එනවා", desc: "හැමෝම ඇතුලට ඇවිත් ඉන්න එතකොට" },
-    { title: "7.20 වෙද්දි ඔන්න අපේ party එක පටන් ගන්නයී හදන්නේ", desc: "" },
+    { title: "7.20 වෙද්දි, අපේ party එක පටන් ගන්නයී හදන්නේ", desc: "" },
     { title: "7.30ට බොන කට්ටිය bar එක පැත්තට එන්න", desc: "නෑ නෑ අනිත් අයට ලගටම ගෙනෙත් දෙනවා කන බොන ඒවා.." },
     { title: "කැමතිද අපේ පරණ පොටෝ බලන්න..ඔන්න ඒකට වෙලාව", desc: "" },
     { title: "ගායක ගායීකාවනී ඔන්න වේදීකාව විවෘතයි", desc: "" },
@@ -484,7 +444,7 @@ const MainPage = ({ onGoToProgram }) => {
               letterSpacing: '4px', 
               textTransform: 'uppercase', 
               marginBottom: '20px', 
-              color: '#000000',
+              // color: '#000000',
               fontWeight: 900, 
               fontFamily: '"Noto Sans Sinhala", sans-serif' 
             }}
@@ -512,7 +472,19 @@ const MainPage = ({ onGoToProgram }) => {
             initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.5, delay: 0.8 }}
             style={{ fontSize: 'clamp(40px, 8vw, 80px)', fontFamily: 'serif', margin: '0 0 20px 0', textShadow: '2px 4px 10px rgba(0,0,0,0.3)' }}
           >
-            යෂාරා <span style={{ fontFamily: "'Great Vibes', cursive", fontSize: 'clamp(30px, 6vw, 60px)', margin: '0 15px' }}>&</span> අනුරුද්ධ 
+            <div>
+              <div style={{ fontFamily: "'Great Vibes', cursive", fontSize: 'clamp(30px, 6vw, 60px)' }}>
+                යෂාරා
+              </div>
+              
+              <div style={{ fontFamily: "'Great Vibes', cursive", fontSize: 'clamp(30px, 6vw, 60px)', margin: '10px 0' }}>
+                &
+              </div>
+              
+              <div style={{ fontFamily: "'Great Vibes', cursive", fontSize: 'clamp(30px, 6vw, 60px)' }}>
+                අනුරුද්ධ
+              </div>
+            </div>  
           </motion.h1>
 
           <motion.div 
@@ -556,7 +528,7 @@ const MainPage = ({ onGoToProgram }) => {
           lineHeight: '1.8',
           fontFamily: '"Abhaya Libre", serif'
         }}>
-          මේ දවස අප දෙදෙනාගේ සදාකාලික බැඳීමේ සමාරම්භයයි. ආදරය, විශ්වාසය සහ නිමක් නැති සිනහව මතින් ගොඩනැගුණු අපේ මේ සොඳුරු ගමන ලස්සන කරන්න ඔබටත් අපි හදවතින්ම ආරාධනා කරමු.
+          මේ දවස අප දෙදෙනාගේ සදාකාලික බැඳීමේ සමාරම්භයයි. ආදරය, විශ්වාසය සහ නිමක් නැති සිනහව මතින් ගොඩනැගුණු අපේ මේ සොඳුරු ගමන ලස්සන කරන්න ඔබටත් අපි හදවතින්ම ආරාධනා කරනවා.
         </p>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '40px' }}>
@@ -612,7 +584,7 @@ const MainPage = ({ onGoToProgram }) => {
       {/* --- LOCATION & CALENDAR SECTION --- */}
       <section style={{ padding: '80px 20px', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
         <p style={{ fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', color: '#888', marginBottom: '10px' }}>අපිව බලන්න එනවනම්...</p>
-        <h2 style={{ fontSize: '36px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '40px' }}>ඒ සොඳුරු හමුව සිදුවන තැන</h2>
+        <h2 style={{ fontSize: '25px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '40px' }}>ඒ සොඳුරු හමුව සිදුවන තැන</h2>
 
         <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '40px 20px', boxShadow: '0 15px 30px rgba(0,0,0,0.05)' }}>
           <MapPin size={32} color="#B59461" style={{ margin: '0 auto 15px auto' }} />
@@ -640,27 +612,27 @@ const MainPage = ({ onGoToProgram }) => {
               href="https://www.google.com/maps/search/?api=1&query=Lavenro+Garden+Hotel+Kosgama" 
               target="_blank" 
               rel="noreferrer"
-              style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#B59461', color: 'white', padding: '12px 25px', borderRadius: '5px', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#B59461', color: 'white', padding: '12px 25px', borderRadius: '5px', textDecoration: 'none', fontSize: '13px', fontWeight: 'bold' }}
             >
-              <MapPin size={16} /> ලෝකේ කොහේ හිටියත් පාර හොයාගන්න map එක බලන්න
+              <MapPin size={25} /> ලෝකේ කොහේ හිටියත් පාර හොයාගන්න map එක බලන්න
             </a>
             
             <a 
               href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Yashara+%26+Anuruddha&dates=20260803T173000/20260803T235900&details=We+can't+wait+to+celebrate+with+you!&location=Lavenro+Garden+Hotel,+Kosgama,+Awissawella,+Sri+Lanka" 
               target="_blank" 
               rel="noreferrer"
-              style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: 'transparent', color: '#B59461', border: '1px solid #B59461', padding: '12px 25px', borderRadius: '5px', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: 'transparent', color: '#B59461', border: '1px solid #B59461', padding: '12px 25px', borderRadius: '5px', textDecoration: 'none', fontSize: '13px', fontWeight: 'bold' }}
             >
-              <CalendarPlus size={16} /> ඔන්න මේ දවස කැලැන්ඩරේ save කරගන්න
+              <CalendarPlus size={25} /> ඔන්න මේ දවස කැලැන්ඩරේ save කරගන්න
             </a>
           </div>
         </div>
       </section>
 
       {/* --- TIMELINE SECTION --- */}
-      <section style={{ padding: '80px 20px', backgroundColor: '#FDFBF7', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-        <p style={{ fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', color: '#888', marginBottom: '10px' }}>කටයුතු පෙළගැස්ම</p>
-        <h2 style={{ fontSize: '36px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '50px' }}>වැඩේ වෙන්නේ මෙහෙමයී..</h2>
+      <section style={{ padding: '5px 20px', backgroundColor: '#FDFBF7', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+        <p style={{ fontSize: '15px', letterSpacing: '3px', textTransform: 'uppercase', color: '#888', marginBottom: '10px' }}>කටයුතු පෙළගැස්ම</p>
+        <h2 style={{ fontSize: '25px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '50px' }}>වැඩේ වෙන්නේ මෙහෙමයී..</h2>
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
           {/* Center Vertical Line */}
@@ -724,8 +696,8 @@ const MainPage = ({ onGoToProgram }) => {
       {/* --- RSVP SECTION (DYNAMIC) --- */}
       <section ref={rsvpRef} style={{ padding: '80px 20px', backgroundColor: '#F9F6F0' }}>
         <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '36px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '10px' }}>අප හා එක්වන්න</h2>
-          <p style={{ color: '#666', fontSize: '14px', marginBottom: '40px' }}>සොඳුරු සැමරුමට ඔබ එන බව ස්තීරවම කියන්න</p>
+          <h2 style={{ fontSize: '25px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '10px' }}>අප හා එක්වන්න</h2>
+          <p style={{ color: '#666', fontSize: '14px', marginBottom: '40px' }}>සොඳුරු සැමරුමට ඔබ එන බව ස්ථීරවම කියන්න</p>
 
           {/* Changed to prevent default form submits so our custom buttons work */}
           <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
@@ -793,7 +765,7 @@ const MainPage = ({ onGoToProgram }) => {
             </div>
 
             <div>
-              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555' }}>දුරකතන අංකය හෝ වට්ස්ඇප් *</label>
+              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555' }}>දුරකතන අංකය හෝ වට්ස්ඇප් අංකය *</label>
               <input type="tel" name="phone" value={rsvpData.phone} onChange={handleRsvpChange} placeholder="+94 77 123 4567" style={{ width: '100%', padding: '12px', marginTop: '5px', borderRadius: '5px', border: '1px solid #DDD', fontSize: '14px', boxSizing: 'border-box' }} />
             </div>
 
@@ -803,7 +775,7 @@ const MainPage = ({ onGoToProgram }) => {
             </div>
 
             <div>
-              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555', display: 'block', marginBottom: '10px' }}>ඔබ අනිවාර්ය්‍යෙන්ම එනවද? *</label>
+              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555', display: 'block', marginBottom: '10px' }}>ඔබ නිසැකවම එනවද? *</label>
               <div style={{ display: 'flex', gap: '15px' }}>
                 
                 {/* YES BUTTON - LIGHT PASTEL GREEN */}
