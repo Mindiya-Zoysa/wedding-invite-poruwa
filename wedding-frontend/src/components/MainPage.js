@@ -10,6 +10,7 @@ import { MapPin, CalendarPlus, CheckCircle, Copy, Camera, Users, Heart, Mail, Ar
 const HERO_IMAGE = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDimMG5ON_9I08nKj9s62ph8AzV-qTtGS8_Q&s"; 
 const YASARA_PIC = "3d-cartoon-style-character_23-2151034069.avif";
 const ANURUDDHA_PIC = "Gemini_Generated_Image_ia7lbxia7lbxia7l.png";
+const PORUWA_WEDDING_INVITATION = "poruwa_wedding_invitation.jpeg"
 
 // --- HELPER COMPONENT: COUNTDOWN TIMER ---
 const CountdownTimer = ({ targetDate }) => {
@@ -38,10 +39,10 @@ const CountdownTimer = ({ targetDate }) => {
   });
 
   const timeBlocks = [
-    { label: 'DAYS', value: timeLeft.days || '00' },
-    { label: 'HOURS', value: timeLeft.hours || '00' },
-    { label: 'MINUTES', value: timeLeft.minutes || '00' },
-    { label: 'SECONDS', value: timeLeft.seconds || '00' }
+    { label: 'දින', value: timeLeft.days || '00' },
+    { label: 'පැය', value: timeLeft.hours || '00' },
+    { label: 'මිනිත්තු', value: timeLeft.minutes || '00' },
+    { label: 'තත්පර', value: timeLeft.seconds || '00' }
   ];
 
   return (
@@ -274,31 +275,31 @@ const MainPage = ({ onGoToProgram }) => {
   
   const showDressCode = () => {
     Swal.fire({
-      title: '<span style="font-family: serif; font-size: 36px; color: #4A4A4A;">Dress Code</span>',
+      title: '<span style="font-family: serif; font-size: 36px; color: #4A4A4A;">ඇඳුම් විලාසිතාව</span>',
       html: `
         <div style="font-family: sans-serif; color: #666; line-height: 1.6; padding: 10px 0;">
-          <p style="font-size: 15px; margin-bottom: 25px;">We would love to see our family and friends dress up with us!</p>
+          <p style="font-size: 15px; margin-bottom: 25px;">අපේ මේ සතුටුදායක දවසේ ඔබ සැම අප හා සමානවම අලංකාරව සැරසී සිටිනු දැකීම අපේ කැමැත්තයි!</p>
           
           <div style="padding: 20px; border: 1px dashed #B59461; border-radius: 8px; background-color: #FDFBF7;">
             <p style="font-family: serif; font-weight: bold; color: #B59461; font-size: 24px; margin: 0 0 10px 0;">
-              For Military People
+              හමුදා නිලධාරීන් සඳහා
             </p>
             <p style="margin: 0; font-size: 14px; color: #888;">
-              We proudly welcome our military guests to wear their Ceremonial Dress.
+              අපගේ ආරාධිත හමුදා නිලධාරීන්ට ඔවුන්ගේ නිල ඇඳුමින් (Ceremonial Dress) සැරසී පැමිණෙන ලෙස අප ගෞරවයෙන් ආරාධනා කරමු. .
             </p>
           </div>
           <div style="padding: 20px; border: 1px dashed #B59461; border-radius: 8px; background-color: #FDFBF7;">
             <p style="font-family: serif; font-weight: bold; color: #B59461; font-size: 24px; margin: 0 0 10px 0;">
-              For Other Guest
+              අනෙකුත් අමුත්තන් සඳහා
             </p>
             <p style="margin: 0; font-size: 14px; color: #888;">
-              We warmly invite you to wear traditional attire, formal suits, or evening gowns for our night Poruwa ceremony.
+              විවහා මංගලය සඳහා පූර්ණ ඇඳුම් කට්ටල (Suits) හෝ මංගල උත්සවයකට උචිත අලංකාර ඇඳුමින් (Cocktail Dresses) සැරසී පැමිණීම අගය කරමු.
             </p>
           </div>
         </div>
       `,
       confirmButtonColor: '#B59461',
-      confirmButtonText: 'Can\'t wait!',
+      confirmButtonText: 'අගය කරමු!',
       width: '450px',
       padding: '2em',
       background: '#fff',
@@ -436,13 +437,21 @@ const MainPage = ({ onGoToProgram }) => {
   // --- TIMELINE DATA ARRAY ---
   // We define this here so the JSX below stays clean and easy to read
   const timelineEvents = [
-    { time: "8:30 AM", title: "Expected Arrival of Guests", desc: "Find your designated place to witness our union.", action: showSeating, actionText: "View Seating", actionIcon: <Users size={14} /> },
-    { time: "8:45 AM", title: "Groom's Arrival", desc: "The groom will arrive at the church" },
-    { time: "8:55 AM", title: "Bride's Arrival", desc: "The bride will arrive at the church" },
-    { time: "9:00 AM", title: "Wedding Service", desc: "Join us in prayer and song.", action: () => setShowProgramModal(true), actionText: "View Program", actionIcon: <BookOpen size={14} /> },
-    { time: "10:10 AM", title: "Wedding Registration", desc: "Two hearts, two traditions, one lifelong journey." },
-    { time: "10:20 AM", title: "Wedding March", desc: "The ceremony ended with smiles, blessings, and the joyful beginning of married life." },
-    { time: "10:30 AM", title: "Blessings for the couple", desc: "Give your wishes to the couple and take a photo" }
+    { title: "ඔන්න හවස 5.30 වෙද්දි ඇවිල්ලා ඉන්න ඕන", desc: "", action: showSeating, actionText: "ඔයාටම වෙන්කරපු තැන බලාගන්න", actionIcon: <Users size={14} /> },
+    { title: "6.00 වෙද්දී අපි පෝරුවට නගිනවා", desc: "Pool Area පැත්තට එන්න" },
+    { title: "6.47 වෙද්දී අපි පෝරුවෙන් බහිනවා", desc: "" },
+    { title: "ඔන්න රෑ 7.00 වෙද්දි අපි ශාලාව ඇතුලට එනවා", desc: "හැමෝම ඇතුලට ඇවිත් ඉන්න එතකොට" },
+    { title: "7.20 වෙද්දි ඔන්න අපේ party එක පටන් ගන්නයී හදන්නේ", desc: "" },
+    { title: "7.30ට බොන කට්ටිය bar එක පැත්තට එන්න", desc: "නෑ නෑ අනිත් අයට ලගටම ගෙනෙත් දෙනවා කන බොන ඒවා.." },
+    { title: "කැමතිද අපේ පරණ පොටෝ බලන්න..ඔන්න ඒකට වෙලාව", desc: "" },
+    { title: "ගායක ගායීකාවනී ඔන්න වේදීකාව විවෘතයි", desc: "" },
+    { title: "ඔයාලා අපි ලගට එන්න එපා..අපි එනවා ඔයාල ලගට පොටෝ ගහන්න", desc: "ඒ නිසා ඔයාලා නිදහසේ enjoy කරන්න." },
+    { title: "බඩගිනී නේද.. ඔන්න 9.00ට අපි කන්න දෙනවා..", desc: "ලැජ්ජ වෙන්න එපා බඩපැලෙන්න කන්න." },
+    { title: "තාම dessert කෑවේ නැද්ද.", desc: "අද ඇති තරම් කන්න." },
+    { title: "කාලා බීලා නිදාගන්නද කල්පනාව.. එහෙම බෑ.. දැන් නටන්න එන්න", desc: "හොදම සිංදු ටික යන්නේ දැන්නේ." },
+    { title: "10.47යී. අපි පිටත් වෙන්නයි යන්නේ..", desc: "" },
+    { title: "අපි ගියාට party එක තාම යනවා", desc: "ඔයාලා enjoy කරන්න." },
+    { title: "ආපු හැමෝටම ගොඩක් ස්තූතීයී.", desc: "" },
   ];
 
   return (
@@ -467,24 +476,50 @@ const MainPage = ({ onGoToProgram }) => {
 
         <div style={{ zIndex: 2, padding: '20px' }}>
           <motion.p 
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.5 }}
-            style={{ fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '20px' }}
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 1, delay: 0.5 }}
+            style={{ 
+              fontSize: '16px', 
+              letterSpacing: '4px', 
+              textTransform: 'uppercase', 
+              marginBottom: '20px', 
+              color: '#000000',
+              fontWeight: 900, 
+              fontFamily: '"Noto Sans Sinhala", sans-serif' 
+            }}
           >
-            Save The Date
+            කැලැන්ඩරේ ලොකු රවුමක් ඇඳගන්න
+          </motion.p>
+
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 1, delay: 0.5 }}
+            style={{ 
+              fontSize: '16px', 
+              letterSpacing: '4px', 
+              textTransform: 'uppercase', 
+              marginBottom: '20px',
+              fontWeight: 900, 
+              fontFamily: '"Noto Sans Sinhala", sans-serif'
+            }}
+          >
+            අපේ දවස.. මිස් කරගන්න එපා!
           </motion.p>
 
           <motion.h1 
             initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.5, delay: 0.8 }}
             style={{ fontSize: 'clamp(40px, 8vw, 80px)', fontFamily: 'serif', margin: '0 0 20px 0', textShadow: '2px 4px 10px rgba(0,0,0,0.3)' }}
           >
-            Yashara <span style={{ fontFamily: "'Great Vibes', cursive", fontSize: 'clamp(30px, 6vw, 60px)', margin: '0 15px' }}>&</span> Anuruddha
+            යෂාරා <span style={{ fontFamily: "'Great Vibes', cursive", fontSize: 'clamp(30px, 6vw, 60px)', margin: '0 15px' }}>&</span> අනුරුද්ධ 
           </motion.h1>
 
           <motion.div 
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.5 }}
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', fontSize: '24px', fontFamily: 'serif' }}
           >
-            <span>Auguts</span>
+            <span>අගෝස්තු</span>
             <span style={{ fontSize: '48px', borderLeft: '1px solid white', borderRight: '1px solid white', padding: '0 15px' }}>03</span>
             <span>2026</span>
           </motion.div>
@@ -496,16 +531,32 @@ const MainPage = ({ onGoToProgram }) => {
           onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
         >
           <span style={{ fontSize: '10px', letterSpacing: '2px', border: '1px solid white', padding: '8px 20px', textTransform: 'uppercase' }}>
-            Scroll Down
+            වැඩි විස්තර බලන්න පහලට යන්න
           </span>
         </motion.div>
       </section>
 
       {/* --- ABOUT SECTION --- */}
-      <section style={{ padding: '80px 20px', textAlign: 'center', maxWidth: '1000px', margin: '0 auto' }}>
-        <h2 style={{ fontSize: '32px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '10px' }}>Invite you to witness their union</h2>
-        <p style={{ color: '#888', fontSize: '14px', maxWidth: '600px', margin: '0 auto 50px auto', lineHeight: '1.6' }}>
-          Today marks the beginning of our forever. Built on love, trust, and endless laughter, our journey together is one we cherish deeply.
+      <section style={{ padding: '10px 20px', textAlign: 'center', maxWidth: '1000px', margin: '0 auto' }}>
+        <h2 style={{ 
+          fontSize: '20px', 
+          fontFamily: '"Abhaya Libre", serif', 
+          color: '#4A4A4A', 
+          marginBottom: '10px',
+          fontWeight: 600 
+        }}>
+          දෙහදක් එක්වන ඒ සොඳුරු මොහොතේ සාක්ෂිකරුවෙකු වන්නට ඔබට සෙනෙහසින් ආරාධනා
+        </h2>
+        <p style={{ 
+          padding: '10px 20px', 
+          color: '#888', 
+          fontSize: '15px', 
+          maxWidth: '600px', 
+          margin: '0 auto 50px auto', 
+          lineHeight: '1.8',
+          fontFamily: '"Abhaya Libre", serif'
+        }}>
+          මේ දවස අප දෙදෙනාගේ සදාකාලික බැඳීමේ සමාරම්භයයි. ආදරය, විශ්වාසය සහ නිමක් නැති සිනහව මතින් ගොඩනැගුණු අපේ මේ සොඳුරු ගමන ලස්සන කරන්න ඔබටත් අපි හදවතින්ම ආරාධනා කරමු.
         </p>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '40px' }}>
@@ -528,7 +579,7 @@ const MainPage = ({ onGoToProgram }) => {
                 </p>
               </motion.div>
             </motion.div>
-            <h3 style={{ fontFamily: 'serif', fontSize: '24px', color: '#4A4A4A', marginTop: '20px', marginBottom: '10px' }}>Anuruddha</h3>
+            <h3 style={{ fontFamily: 'serif', fontSize: '24px', color: '#4A4A4A', marginTop: '20px', marginBottom: '10px' }}>මම අනුරුද්ධ (සිකුරා)</h3>
           </div>
 
           {/* Yasara Card */}
@@ -547,21 +598,21 @@ const MainPage = ({ onGoToProgram }) => {
                 </p>
               </motion.div>
             </motion.div>
-            <h3 style={{ fontFamily: 'serif', fontSize: '24px', color: '#4A4A4A', marginTop: '20px', marginBottom: '10px' }}>Yashara</h3>
+            <h3 style={{ fontFamily: 'serif', fontSize: '24px', color: '#4A4A4A', marginTop: '20px', marginBottom: '10px' }}>මම යශාරා (චූටී)</h3>
           </div>
         </div>
       </section>
 
       {/* --- COUNTDOWN SECTION --- */}
       <section style={{ padding: '60px 20px', backgroundColor: '#F9F6F0', textAlign: 'center' }}>
-        <h2 style={{ fontSize: '28px', fontFamily: 'serif', color: '#B59461', marginBottom: '40px' }}>The Countdown Begins</h2>
+        <h2 style={{ fontSize: '28px', fontFamily: 'serif', color: '#B59461', marginBottom: '40px' }}>ඒ ලස්සන දවසට තව දින</h2>
         <CountdownTimer targetDate="2026-08-03T17:30:00" />
       </section>
 
       {/* --- LOCATION & CALENDAR SECTION --- */}
       <section style={{ padding: '80px 20px', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-        <p style={{ fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', color: '#888', marginBottom: '10px' }}>Join Us At</p>
-        <h2 style={{ fontSize: '36px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '40px' }}>The Location</h2>
+        <p style={{ fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', color: '#888', marginBottom: '10px' }}>අපිව බලන්න එනවනම්...</p>
+        <h2 style={{ fontSize: '36px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '40px' }}>ඒ සොඳුරු හමුව සිදුවන තැන</h2>
 
         <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '40px 20px', boxShadow: '0 15px 30px rgba(0,0,0,0.05)' }}>
           <MapPin size={32} color="#B59461" style={{ margin: '0 auto 15px auto' }} />
@@ -591,7 +642,7 @@ const MainPage = ({ onGoToProgram }) => {
               rel="noreferrer"
               style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#B59461', color: 'white', padding: '12px 25px', borderRadius: '5px', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}
             >
-              <MapPin size={16} /> Open in Maps
+              <MapPin size={16} /> ලෝකේ කොහේ හිටියත් පාර හොයාගන්න map එක බලන්න
             </a>
             
             <a 
@@ -600,7 +651,7 @@ const MainPage = ({ onGoToProgram }) => {
               rel="noreferrer"
               style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: 'transparent', color: '#B59461', border: '1px solid #B59461', padding: '12px 25px', borderRadius: '5px', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}
             >
-              <CalendarPlus size={16} /> Add to Calendar
+              <CalendarPlus size={16} /> ඔන්න මේ දවස කැලැන්ඩරේ save කරගන්න
             </a>
           </div>
         </div>
@@ -608,8 +659,8 @@ const MainPage = ({ onGoToProgram }) => {
 
       {/* --- TIMELINE SECTION --- */}
       <section style={{ padding: '80px 20px', backgroundColor: '#FDFBF7', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-        <p style={{ fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', color: '#888', marginBottom: '10px' }}>Our Celebration</p>
-        <h2 style={{ fontSize: '36px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '50px' }}>Timeline</h2>
+        <p style={{ fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', color: '#888', marginBottom: '10px' }}>කටයුතු පෙළගැස්ම</p>
+        <h2 style={{ fontSize: '36px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '50px' }}>වැඩේ වෙන්නේ මෙහෙමයී..</h2>
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
           {/* Center Vertical Line */}
@@ -673,15 +724,14 @@ const MainPage = ({ onGoToProgram }) => {
       {/* --- RSVP SECTION (DYNAMIC) --- */}
       <section ref={rsvpRef} style={{ padding: '80px 20px', backgroundColor: '#F9F6F0' }}>
         <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
-          <p style={{ fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', color: '#888', marginBottom: '10px' }}>Join Us</p>
-          <h2 style={{ fontSize: '36px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '10px' }}>RSVP</h2>
-          <p style={{ color: '#666', fontSize: '14px', marginBottom: '40px' }}>Please let us know if you can join our celebration</p>
+          <h2 style={{ fontSize: '36px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '10px' }}>අප හා එක්වන්න</h2>
+          <p style={{ color: '#666', fontSize: '14px', marginBottom: '40px' }}>සොඳුරු සැමරුමට ඔබ එන බව ස්තීරවම කියන්න</p>
 
           {/* Changed to prevent default form submits so our custom buttons work */}
           <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             
             <div>
-              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555', display: 'block', marginBottom: '10px' }}>Which side are you from? *</label>
+              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555', display: 'block', marginBottom: '10px' }}>ඔබ නියෝජනය කරන්නේ කාගේ පැත්තද? *</label>
               <div style={{ display: 'flex', gap: '15px' }}>
                 
                 {/* BRIDE'S SIDE BUTTON - PINK */}
@@ -706,7 +756,7 @@ const MainPage = ({ onGoToProgram }) => {
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  Bride's Side (Yashara)
+                  මනාලිය වෙනුවෙන් (යෂාරාගේ පැත්තෙන්)
                 </motion.button>
 
                 {/* GROOM'S SIDE BUTTON - BLUE */}
@@ -731,29 +781,29 @@ const MainPage = ({ onGoToProgram }) => {
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  Groom's Side (Anuruddha)
+                  මනාලයා වෙනුවෙන් (අනුරුද්ධගේ පැත්තෙන්)
                 </motion.button>
 
               </div>
             </div>
 
             <div>
-              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555' }}>Your Name *</label>
-              <input type="text" name="name" value={rsvpData.name} onChange={handleRsvpChange} placeholder="Enter your full name" style={{ width: '100%', padding: '12px', marginTop: '5px', borderRadius: '5px', border: '1px solid #DDD', fontSize: '14px', boxSizing: 'border-box' }} />
+              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555' }}>ඔබගේ නම *</label>
+              <input type="text" name="name" value={rsvpData.name} onChange={handleRsvpChange} placeholder="Enter your first & last name" style={{ width: '100%', padding: '12px', marginTop: '5px', borderRadius: '5px', border: '1px solid #DDD', fontSize: '14px', boxSizing: 'border-box' }} />
             </div>
 
             <div>
-              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555' }}>Telephone / WhatsApp No *</label>
+              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555' }}>දුරකතන අංකය හෝ වට්ස්ඇප් *</label>
               <input type="tel" name="phone" value={rsvpData.phone} onChange={handleRsvpChange} placeholder="+94 77 123 4567" style={{ width: '100%', padding: '12px', marginTop: '5px', borderRadius: '5px', border: '1px solid #DDD', fontSize: '14px', boxSizing: 'border-box' }} />
             </div>
 
             <div>
-              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555' }}>Message for the couple (Optional)</label>
+              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555' }}>අපි වෙනුවෙන් වචනයක් ලියන්න (කැමතිනම්)</label>
               <textarea name="message" value={rsvpData.message} onChange={handleRsvpChange} placeholder="Share your wishes or any special requests..." rows="3" style={{ width: '100%', padding: '12px', marginTop: '5px', borderRadius: '5px', border: '1px solid #DDD', fontSize: '14px', fontFamily: 'inherit', boxSizing: 'border-box' }}></textarea>
             </div>
 
             <div>
-              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555', display: 'block', marginBottom: '10px' }}>Will you attend? *</label>
+              <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555', display: 'block', marginBottom: '10px' }}>ඔබ අනිවාර්ය්‍යෙන්ම එනවද? *</label>
               <div style={{ display: 'flex', gap: '15px' }}>
                 
                 {/* YES BUTTON - LIGHT PASTEL GREEN */}
@@ -778,7 +828,7 @@ const MainPage = ({ onGoToProgram }) => {
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  Yes, I'll be there!
+                  ඔව් අනිවාර්ය්‍යෙන්ම එනවා. 
                 </motion.button>
 
                 {/* NO BUTTON - LIGHT PASTEL RED */}
@@ -802,7 +852,7 @@ const MainPage = ({ onGoToProgram }) => {
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  Sorry, I can't attend
+                  අනේ තරහා වෙන්න එපා, මට එන්න වෙන් නෑ.
                 </motion.button>
 
               </div>
@@ -813,7 +863,7 @@ const MainPage = ({ onGoToProgram }) => {
               <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} style={{ display: 'flex', flexDirection: 'column', gap: '20px', overflow: 'hidden' }}>
                 
                 <div style={{ padding: '20px', backgroundColor: 'white', borderRadius: '8px', border: '1px solid #EAEAEA', marginTop: '10px' }}>
-                  <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555' }}>How many guests in your party? (Including yourself)</label>
+                  <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#555' }}>ඔබත් සමඟින් මේ සොඳුරු මොහොතට එක්වන ආදරණීයයන් ගණන කොපමණද? </label>
                   <select value={rsvpData.guestCount} onChange={handleGuestCountChange} style={{ width: '100%', padding: '12px', marginTop: '10px', borderRadius: '5px', border: '1px solid #DDD', fontSize: '14px', backgroundColor: 'white' }}>
                     <option value="1">Just me (1)</option>
                     <option value="2">2 Guests</option>
@@ -835,7 +885,7 @@ const MainPage = ({ onGoToProgram }) => {
                               type="text" 
                               value={guest} 
                               onChange={(e) => handleAdditionalGuestChange(index, e.target.value)} 
-                              placeholder={`Full name of Guest ${index + 2}`} 
+                              placeholder={`First & last name of Guest ${index + 2}`} 
                               style={{ width: '100%', padding: '10px', marginTop: '5px', borderRadius: '5px', border: '1px dashed #CCC', fontSize: '14px', boxSizing: 'border-box' }} 
                             />
                           </div>
@@ -864,7 +914,7 @@ const MainPage = ({ onGoToProgram }) => {
                 </div>
 
                 <button type="button" onClick={handleYesSubmit} style={{ backgroundColor: '#B59461', color: 'white', padding: '15px', border: 'none', borderRadius: '5px', fontSize: '16px', fontWeight: 'bold', cursor: 'pointer', transition: 'background-color 0.3s' }}>
-                  Submit RSVP
+                  තහවුරු කරන්න
                 </button>
               </motion.div>
             )}
@@ -895,7 +945,7 @@ const MainPage = ({ onGoToProgram }) => {
                 transition: 'all 0.3s'
               }}
             >
-              {tab === 'menu' ? 'Wedding Menu' : tab === 'gallery' ? 'Wedding Gallery' : 'Contributions'}
+              {tab === 'menu' ? 'කෑම/බීම' : tab === 'gallery' ? 'සොඳුරු මතක අඩවිය' : 'e ප්‍රාර්ථනා සහ තිළිණ'}
             </button>
           ))}
         </div>
@@ -906,8 +956,8 @@ const MainPage = ({ onGoToProgram }) => {
           {activeTab === 'menu' && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <Music size={32} color="#B59461" style={{ margin: '0 auto 15px auto' }} />
-              <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '5px' }}>Wedding Menu</h3>
-              <p style={{ color: '#888', fontSize: '14px', marginBottom: '30px' }}>Will let you know soon.</p>
+              <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '5px' }}>මංගල භෝජන සංග්‍රහයේ රසබර තොරතුරු... </h3>
+              <p style={{ color: '#888', fontSize: '14px', marginBottom: '30px' }}>ළඟදීම ඔබ වෙත.</p>
               
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
                 {/* {menu.map((hymn, i) => (
@@ -946,9 +996,9 @@ const MainPage = ({ onGoToProgram }) => {
           {activeTab === 'gallery' && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <Camera size={32} color="#B59461" style={{ margin: '0 auto 15px auto' }} />
-              <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '5px' }}>Wedding Gallery</h3>
+              <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '5px' }}>සොඳුරු මතක අඩවිය (ඔබේ ඇසින් අපේ මංගල්‍යය)</h3>
               <p style={{ color: '#888', fontSize: '14px', marginBottom: '20px' }}>
-                Help us capture the magic! Upload your photos and videos to our shared album.
+                "අපේ මංගල මතකයන් තව තවත් හැඩ කරන්න! ඔබ ලබාගත් ඡායාරූප සහ වීඩියෝ අපේ පොදු ඇල්බමයට එක් කරන්න."
               </p>
               <a 
                 href="https://photos.app.goo.gl/MNcvTjgib9otm3Zo8" 
@@ -956,7 +1006,7 @@ const MainPage = ({ onGoToProgram }) => {
                 target="_blank" rel="noreferrer"
                 style={{ display: 'inline-block', backgroundColor: '#333', color: 'white', padding: '12px 25px', borderRadius: '5px', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}
               >
-                Open Google Photos
+                Google ඇල්බමය
               </a>
             </motion.div>
           )}
@@ -965,9 +1015,9 @@ const MainPage = ({ onGoToProgram }) => {
           {activeTab === 'contributions' && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <Heart size={32} color="#B59461" style={{ margin: '0 auto 15px auto' }} />
-              <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '5px' }}>Contribute a E Gift</h3>
+              <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '5px' }}>ඔබේ ආදරය සහ ආශිර්වාදය අප ලබන වටිනාම තිළිණයයි</h3>
               <p style={{ color: '#888', fontSize: '14px', marginBottom: '30px' }}>
-                Your love and blessings are the greatest gift. For those who wish to honor us with a gift, online transfer details are shared below.
+                "අපට ලැබෙන ඉහළම තිළිණය ඔබේ ආදරණීය ආශිර්වාදයයි. අපේ නව දිවියට e-තිළිණයකින් සුබ පතන්නට කැමති අයට ඉලෙක්ට්‍රොනිකව දායක විය හැකි තොරතුරු මෙහි දැක්වේ."
               </p>
 
               <div style={{ backgroundColor: 'white', border: '1px solid #EAEAEA', borderRadius: '8px', padding: '20px', textAlign: 'left', display: 'inline-block', width: '100%', maxWidth: '350px', boxShadow: '0 4px 10px rgba(0,0,0,0.03)' }}>
@@ -1044,7 +1094,7 @@ const MainPage = ({ onGoToProgram }) => {
         }}
       >
         <Sparkles size={16} />
-        Dress Code
+        ඇදුම් පැලදුම් විස්තර
       </motion.button>
 
       {/* --- NEW: FLOATING ACTION BUTTON --- */}
@@ -1081,65 +1131,93 @@ const MainPage = ({ onGoToProgram }) => {
         <div 
           ref={cardRef} 
           style={{ 
-            backgroundColor: '#E6D5C3', // Warm tan background
+            backgroundColor: '#E6D5C3', 
             padding: '15px', 
             borderRadius: '12px', 
-            width: '420px', // Fixed width so the PDF is always perfectly sized
+            width: '420px', 
             boxSizing: 'border-box'
           }}
         >
-          {/* The Inner Arch Design */}
+          {/* Invitation Image Template Container */}
           <div style={{ 
-            backgroundColor: '#FDFBF7', 
-            borderTopLeftRadius: '180px', 
-            borderTopRightRadius: '180px', 
-            borderBottomLeftRadius: '8px', 
-            borderBottomRightRadius: '8px', 
-            padding: '60px 30px 40px 30px', 
+            borderRadius: '8px', 
             textAlign: 'center',
-            border: '1px solid #D5B99B'
+            border: '1px solid #D5B99B', 
+            position: 'relative', 
+            overflow: 'hidden', 
+            aspectRatio: '0.707', 
+            backgroundColor: '#FBF8F4', 
           }}>
-            
-            <p style={{ fontSize: '10px', letterSpacing: '3px', textTransform: 'uppercase', color: '#888', margin: '0 0 20px 0' }}>
-              Together with their families
-            </p>
-            
-            <h2 style={{ fontFamily: 'serif', fontSize: '38px', color: '#8A5A44', margin: '0 0 30px 0', fontWeight: 'normal' }}>
-              Yashara <span style={{ fontSize: '28px' }}>&</span> Anuruddha
-            </h2>
+            {/* Background Image Template */}
+            <img 
+              src={PORUWA_WEDDING_INVITATION} 
+              alt="Wedding Invitation Template"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                zIndex: 1 
+              }}
+            />
 
-            <p style={{ fontSize: '13px', color: '#666', marginBottom: '15px', textTransform: 'uppercase', letterSpacing: '1px' }}>
-              Joyfully invite
-            </p>
+            {/* Dynamic Content Overlays */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 2, 
+              display: 'flex',
+              justifyContent: 'center',
+            }}>
 
-            {/* Dynamic Names */}
-            <div style={{ backgroundColor: '#fdf7f0', border: '1px dashed #D5B99B', padding: '15px', borderRadius: '8px', margin: '0 auto 20px auto' }}>
-              <p style={{ fontSize: '18px', fontWeight: 'bold', color: '#B59461', fontFamily: 'serif', margin: 0, lineHeight: '1.4' }}>
-                {finalGuestNames}
-              </p>
-            </div>
-
-            <p style={{ fontSize: '13px', color: '#666', marginBottom: '30px', letterSpacing: '1px' }}>
-              to their wedding celebration
-            </p>
-
-            {/* Date & Location Split */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #EAEAEA', paddingTop: '25px', color: '#555' }}>
-              
-              <div style={{ flex: 1, textAlign: 'center' }}>
-                <Calendar size={22} color="#B59461" style={{ marginBottom: '8px' }} />
-                <p style={{ fontSize: '12px', margin: '0 0 4px 0', fontWeight: 'bold' }}>August 03, 2026</p>
-                <p style={{ fontSize: '11px', margin: 0, color: '#888' }}>8:30 AM</p>
+              {/* The "To:" Box - Perfectly Aligned */}
+              <div style={{ 
+                position: 'absolute',
+                top: '49%', /* TIP: Adjust this percentage slightly up or down to perfectly align with your background image! */
+                width: '70%', 
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '12px',
+                backgroundColor: 'transparent', /* REMOVED BACKGROUND: Now perfectly see-through */
+                padding: '10px 20px',
+                borderRadius: '8px',
+                border: '1px solid #D5B99B', /* Kept the border as requested */
+                boxSizing: 'border-box'
+              }}>
+                <span style={{ 
+                  fontSize: '12px', 
+                  color: '#624a44', /* MATCHED: Dark grey/black from PDF */
+                  fontFamily: "'CINZEL DECORATIVE', serif", /* MATCHED: Clean sans-serif font from PDF */
+                  letterSpacing: '1px',
+                  textTransform: 'uppercase',
+                  flexShrink: 0 /* Prevents the "To:" from shrinking */
+                }}>
+                  To:
+                </span>
+                <span style={{ 
+                  /* DYNAMIC FONT SIZE: Shrinks automatically if the name list gets too long! */
+                  fontSize: finalGuestNames.length > 50 ? '11px' : finalGuestNames.length > 25 ? '14px' : '18px', 
+                  fontWeight: 'bold', 
+                  fontFamily: "'CINZEL DECORATIVE', serif", /* MATCHED: Elegant serif font from PDF */
+                  color: '#624a44',
+                  borderBottom: '1px dotted rgba(51, 51, 51, 0.4)', 
+                  paddingBottom: '2px',
+                  minWidth: '150px',
+                  maxWidth: '260px', /* Forces text to wrap before hitting the edges */
+                  display: 'inline-block',
+                  lineHeight: '1.3', /* Keeps multi-line names tight so they don't push down */
+                  textAlign: 'center'
+                }}>
+                  {finalGuestNames || "Guests"} 
+                </span>
               </div>
               
-              <div style={{ width: '1px', height: '40px', backgroundColor: '#EAEAEA' }}></div>
-              
-              <div style={{ flex: 1, textAlign: 'center' }}>
-                <MapPin size={22} color="#B59461" style={{ marginBottom: '8px' }} />
-                <p style={{ fontSize: '12px', margin: '0 0 4px 0', fontWeight: 'bold' }}>Lavenro Garden Hotel</p>
-                <p style={{ fontSize: '11px', margin: 0, color: '#888' }}>Kosgama</p>
-              </div>
-
             </div>
           </div>
         </div>
