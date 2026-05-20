@@ -157,7 +157,7 @@ const Envelope = ({ onComplete }) => {
             textTransform: 'uppercase',
             fontFamily: 'sans-serif'
           }}>
-            Tap to open your invitation
+            ඔබගේ ආරාධනා පත විවෘත කරන්න
           </span>
         </div>
       )}
