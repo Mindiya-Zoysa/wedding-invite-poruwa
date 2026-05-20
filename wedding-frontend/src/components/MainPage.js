@@ -105,7 +105,7 @@ const MainPage = ({ onGoToProgram }) => {
   };
 
   // --- STATE FOR TABS & DYNAMIC RSVP ---
-  const [activeTab, setActiveTab] = useState('hymns');
+  const [activeTab, setActiveTab] = useState('menu');
   const [copied, setCopied] = useState(false);
   // --- INVITATION CARD STATE & PDF GENERATOR ---
   const [finalGuestNames, setFinalGuestNames] = useState('Guest'); 
@@ -292,7 +292,7 @@ const MainPage = ({ onGoToProgram }) => {
               For Other Guest
             </p>
             <p style="margin: 0; font-size: 14px; color: #888;">
-              Suits and cocktail dresses are warmly welcomed for our church ceremony.
+              We warmly invite you to wear traditional attire, formal suits, or evening gowns for our night Poruwa ceremony.
             </p>
           </div>
         </div>
@@ -395,43 +395,43 @@ const MainPage = ({ onGoToProgram }) => {
   };
 
   // --- WEDDING HYMNS DATA & FUNCTION ---
-  const weddingHymns = [
-    {
-      title: "Entrance Hymn",
-      name: "All Are Welcome",
-      lyrics: "Let us build a house where love can dwell<br/>And all can safely live,<br/>A place where saints and children tell<br/>How hearts learn to forgive."
-    },
-    {
-      title: "Offertory Hymn",
-      name: "Take Our Bread",
-      lyrics: "Take our bread, we ask you,<br/>Take our hearts, we love you,<br/>Take our lives, oh Father,<br/>We are yours, we are yours."
-    },
-    {
-      title: "Communion Hymn",
-      name: "One Bread, One Body",
-      lyrics: "One bread, one body,<br/>One Lord of all,<br/>One cup of blessing which we bless.<br/>And we, though many,<br/>Throughout the earth,<br/>We are one body in this one Lord."
-    },
-    {
-      title: "Recessional Hymn",
-      name: "Joyful, Joyful, We Adore Thee",
-      lyrics: "Joyful, joyful, we adore Thee,<br/>God of glory, Lord of love;<br/>Hearts unfold like flowers before Thee,<br/>Opening to the sun above."
-    }
-  ];
+  // const weddingHymns = [
+  //   {
+  //     title: "Entrance Hymn",
+  //     name: "All Are Welcome",
+  //     lyrics: "Let us build a house where love can dwell<br/>And all can safely live,<br/>A place where saints and children tell<br/>How hearts learn to forgive."
+  //   },
+  //   {
+  //     title: "Offertory Hymn",
+  //     name: "Take Our Bread",
+  //     lyrics: "Take our bread, we ask you,<br/>Take our hearts, we love you,<br/>Take our lives, oh Father,<br/>We are yours, we are yours."
+  //   },
+  //   {
+  //     title: "Communion Hymn",
+  //     name: "One Bread, One Body",
+  //     lyrics: "One bread, one body,<br/>One Lord of all,<br/>One cup of blessing which we bless.<br/>And we, though many,<br/>Throughout the earth,<br/>We are one body in this one Lord."
+  //   },
+  //   {
+  //     title: "Recessional Hymn",
+  //     name: "Joyful, Joyful, We Adore Thee",
+  //     lyrics: "Joyful, joyful, we adore Thee,<br/>God of glory, Lord of love;<br/>Hearts unfold like flowers before Thee,<br/>Opening to the sun above."
+  //   }
+  // ];
 
-  const openHymnModal = (hymn) => {
-    Swal.fire({
-      title: `<span style="font-family: serif; font-size: 28px; color: #B59461;">${hymn.title}</span>`,
-      html: `
-        <div style="font-family: sans-serif; color: #555; line-height: 1.8; padding: 10px;">
-          <p style="font-weight: bold; font-size: 18px; color: #333; margin-top: 0;">"${hymn.name}"</p>
-          <p style="font-style: italic; font-size: 15px;">${hymn.lyrics}</p>
-        </div>
-      `,
-      confirmButtonColor: '#B59461',
-      confirmButtonText: 'Close',
-      background: '#FDFBF7'
-    });
-  };
+  // const openHymnModal = (hymn) => {
+  //   Swal.fire({
+  //     title: `<span style="font-family: serif; font-size: 28px; color: #B59461;">${hymn.title}</span>`,
+  //     html: `
+  //       <div style="font-family: sans-serif; color: #555; line-height: 1.8; padding: 10px;">
+  //         <p style="font-weight: bold; font-size: 18px; color: #333; margin-top: 0;">"${hymn.name}"</p>
+  //         <p style="font-style: italic; font-size: 15px;">${hymn.lyrics}</p>
+  //       </div>
+  //     `,
+  //     confirmButtonColor: '#B59461',
+  //     confirmButtonText: 'Close',
+  //     background: '#FDFBF7'
+  //   });
+  // };
 
   // --- TIMELINE DATA ARRAY ---
   // We define this here so the JSX below stays clean and easy to read
@@ -878,7 +878,7 @@ const MainPage = ({ onGoToProgram }) => {
         
         {/* TAB BUTTONS */}
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px', marginBottom: '40px' }}>
-          {['hymns', 'gallery', 'contributions'].map((tab) => (
+          {['menu', 'gallery', 'contributions'].map((tab) => (
             <button 
               key={tab} 
               onClick={() => setActiveTab(tab)}
@@ -895,22 +895,22 @@ const MainPage = ({ onGoToProgram }) => {
                 transition: 'all 0.3s'
               }}
             >
-              {tab === 'hymns' ? 'Wedding Hymns' : tab === 'gallery' ? 'Wedding Gallery' : 'Contributions'}
+              {tab === 'menu' ? 'Wedding Menu' : tab === 'gallery' ? 'Wedding Gallery' : 'Contributions'}
             </button>
           ))}
         </div>
 
         <div style={{ maxWidth: '600px', margin: '0 auto', minHeight: '200px' }}>
           
-          {/* THE NEW HYMNS TAB CONTENT */}
-          {activeTab === 'hymns' && (
+          {/* THE NEW MENU TAB CONTENT */}
+          {activeTab === 'menu' && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <Music size={32} color="#B59461" style={{ margin: '0 auto 15px auto' }} />
-              <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '5px' }}>Wedding Hymns</h3>
-              <p style={{ color: '#888', fontSize: '14px', marginBottom: '30px' }}>Follow along and lift your voices with us during the Mass.</p>
+              <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '5px' }}>Wedding Menu</h3>
+              <p style={{ color: '#888', fontSize: '14px', marginBottom: '30px' }}>Will let you know soon.</p>
               
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
-                {weddingHymns.map((hymn, i) => (
+                {/* {menu.map((hymn, i) => (
                   <motion.button 
                     key={i} 
                     whileHover={{ scale: 1.02, backgroundColor: '#B59461', color: '#fff' }}
@@ -937,7 +937,7 @@ const MainPage = ({ onGoToProgram }) => {
                     <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.8 }}>{hymn.title}</span>
                     <span>{hymn.name}</span>
                   </motion.button>
-                ))}
+                ))} */}
               </div>
             </motion.div>
           )}
@@ -951,7 +951,7 @@ const MainPage = ({ onGoToProgram }) => {
                 Help us capture the magic! Upload your photos and videos to our shared album.
               </p>
               <a 
-                href="https://photos.app.goo.gl/k1Cn42UDr8KqusKQ8" 
+                href="https://photos.app.goo.gl/MNcvTjgib9otm3Zo8" 
                 
                 target="_blank" rel="noreferrer"
                 style={{ display: 'inline-block', backgroundColor: '#333', color: 'white', padding: '12px 25px', borderRadius: '5px', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}
@@ -992,7 +992,7 @@ const MainPage = ({ onGoToProgram }) => {
       <footer style={{ backgroundColor: '#333', color: 'white', padding: '50px 20px 30px 20px', textAlign: 'center' }}>
         <h2 style={{ fontFamily: 'serif', margin: 0, fontSize: '28px', color: '#FDFBF7' }}>Yashara & Anuruddha</h2>
         <p style={{ fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', color: '#B59461', marginTop: '10px', marginBottom: '30px' }}>
-          July 24, 2026
+          August 03, 2026
         </p>
         
         <p style={{ fontSize: '11px', letterSpacing: '1px', textTransform: 'uppercase', color: '#888', margin: '0 0 10px 0' }}>
@@ -1128,7 +1128,7 @@ const MainPage = ({ onGoToProgram }) => {
               
               <div style={{ flex: 1, textAlign: 'center' }}>
                 <Calendar size={22} color="#B59461" style={{ marginBottom: '8px' }} />
-                <p style={{ fontSize: '12px', margin: '0 0 4px 0', fontWeight: 'bold' }}>July 24, 2026</p>
+                <p style={{ fontSize: '12px', margin: '0 0 4px 0', fontWeight: 'bold' }}>August 03, 2026</p>
                 <p style={{ fontSize: '11px', margin: 0, color: '#888' }}>8:30 AM</p>
               </div>
               
