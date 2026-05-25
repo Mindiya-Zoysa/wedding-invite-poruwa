@@ -97,4 +97,21 @@ class RsvpController extends Controller
 
         return $pdf->download('Wedding_Guest_List.pdf');
     }
+
+    // --- DELETE RSVP FUNCTION ---
+    public function destroy($id)
+    {
+        $rsvp = \App\Models\Rsvp::find($id);
+
+        if (!$rsvp) {
+            return response()->json(['message' => 'RSVP not found'], 404);
+        }
+
+        $rsvp->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'RSVP deleted successfully'
+        ], 200);
+    }
 }

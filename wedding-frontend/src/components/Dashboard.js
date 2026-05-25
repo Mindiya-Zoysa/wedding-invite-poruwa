@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Download, Heart, UserCheck, UserX, Lock, FileText } from 'lucide-react';
+import { Users, Download, Heart, UserCheck, UserX, Lock, FileText, Trash2 } from 'lucide-react';
+import Swal from 'sweetalert2';
 
 const Dashboard = () => {
   // --- AUTHENTICATION STATE ---
@@ -51,6 +52,38 @@ const Dashboard = () => {
 
   // --- NEW: FILTER STATE & LOGIC ---
   const [filter, setFilter] = useState('all'); // Options: 'all', 'yes', 'no'
+
+  // --- NEW: DELETE RSVP FUNCTION ---
+  const handleDelete = (id, name) => {
+    Swal.fire({
+      title: 'Delete RSVP?',
+      text: `Are you sure you want to permanently delete the RSVP for ${name}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#888',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await fetch(`http://127.0.0.1:8000/api/rsvp/${id}`, {
+            method: 'DELETE',
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (response.ok) {
+            // Instantly remove it from the React state without refreshing the page!
+            setRsvps(rsvps.filter(rsvp => rsvp.id !== id));
+            Swal.fire({ title: 'Deleted!', text: 'The RSVP has been removed.', icon: 'success', confirmButtonColor: '#B59461' });
+          } else {
+            Swal.fire('Error!', 'Failed to delete the RSVP.', 'error');
+          }
+        } catch (error) {
+          Swal.fire('Error!', 'Could not connect to the server.', 'error');
+        }
+      }
+    });
+  };
 
   // This creates a new array of guests based on which button you clicked
   const filteredRsvps = rsvps.filter(rsvp => {
@@ -174,10 +207,11 @@ const Dashboard = () => {
                     <th style={{ padding: '15px 20px', color: '#555', fontSize: '14px', textAlign: 'center' }}>Party Size</th>
                     <th style={{ padding: '15px 20px', color: '#555', fontSize: '14px' }}>Extra Guests</th>
                     <th style={{ padding: '15px 20px', color: '#555', fontSize: '14px' }}>Message</th>
+                    {/* NEW: Action Header */}
+                    <th style={{ padding: '15px 20px', color: '#555', fontSize: '14px', textAlign: 'center' }}>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {/* IMPORTANT: We now map over filteredRsvps instead of rsvps */}
                   {filteredRsvps.map((rsvp) => (
                     <tr key={rsvp.id} style={{ borderBottom: '1px solid #EAEAEA', backgroundColor: rsvp.attending === 'no' ? '#fcfcfc' : 'white' }}>
                       <td style={{ padding: '15px 20px', fontWeight: 'bold', color: rsvp.attending === 'no' ? '#aaa' : '#333' }}>
@@ -200,9 +234,20 @@ const Dashboard = () => {
                       <td style={{ padding: '15px 20px', color: '#666', fontSize: '13px', maxWidth: '200px' }}>
                         {rsvp.message || '-'}
                       </td>
+                      {/* NEW: Action Cell with Delete Button */}
+                      <td style={{ padding: '15px 20px', textAlign: 'center' }}>
+                        <button 
+                          onClick={() => handleDelete(rsvp.id, rsvp.name)}
+                          style={{ backgroundColor: 'transparent', border: 'none', color: '#dc3545', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', padding: '8px', borderRadius: '5px', transition: 'background-color 0.2s' }}
+                          title="Delete RSVP"
+                          onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#ffebee'}
+                          onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </td>
                     </tr>
                   ))}
-                  {/* Show a friendly message if the filter returns zero results */}
                   {filteredRsvps.length === 0 && (
                     <tr>
                       <td colSpan="6" style={{ padding: '40px', textAlign: 'center', color: '#888' }}>
