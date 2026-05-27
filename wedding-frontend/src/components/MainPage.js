@@ -576,13 +576,13 @@ const MainPage = ({ onGoToProgram }) => {
       </section>
 
       {/* --- COUNTDOWN SECTION --- */}
-      <section style={{ padding: '60px 20px', backgroundColor: '#F9F6F0', textAlign: 'center' }}>
+      <section style={{ padding: '30px 20px', backgroundColor: '#F9F6F0', textAlign: 'center' }}>
         <h2 style={{ fontSize: '28px', fontFamily: 'serif', color: '#B59461', marginBottom: '40px' }}>ඒ ලස්සන දවසට තව දින</h2>
         <CountdownTimer targetDate="2026-08-03T17:30:00" />
       </section>
 
       {/* --- LOCATION & CALENDAR SECTION --- */}
-      <section style={{ padding: '80px 20px', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+      <section style={{ padding: '20px 20px', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
         <p style={{ fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', color: '#888', marginBottom: '10px' }}>අපිව බලන්න එනවනම්...</p>
         <h2 style={{ fontSize: '25px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '40px' }}>ඒ සොඳුරු හමුව සිදුවන තැන</h2>
 
@@ -630,7 +630,7 @@ const MainPage = ({ onGoToProgram }) => {
       </section>
 
       {/* --- TIMELINE SECTION --- */}
-      <section style={{ padding: '5px 20px', backgroundColor: '#FDFBF7', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+      <section style={{ padding: '10px 20px', backgroundColor: '#FDFBF7', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
         <p style={{ fontSize: '15px', letterSpacing: '3px', textTransform: 'uppercase', color: '#888', marginBottom: '10px' }}>කටයුතු පෙළගැස්ම</p>
         <h2 style={{ fontSize: '25px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '50px' }}>වැඩේ වෙන්නේ මෙහෙමයී..</h2>
 
@@ -694,7 +694,7 @@ const MainPage = ({ onGoToProgram }) => {
       </section>
 
       {/* --- RSVP SECTION (DYNAMIC) --- */}
-      <section ref={rsvpRef} style={{ padding: '80px 20px', backgroundColor: '#F9F6F0' }}>
+      <section ref={rsvpRef} style={{ padding: '40px 20px', backgroundColor: '#F9F6F0' }}>
         <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontSize: '25px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '10px' }}>අප හා එක්වන්න</h2>
           <p style={{ color: '#666', fontSize: '14px', marginBottom: '40px' }}>සොඳුරු සැමරුමට ඔබ එන බව ස්ථීරවම කියන්න</p>
