@@ -43,7 +43,8 @@ const HeartCover = ({ onFinish }) => {
           }}
         >
           <motion.path
-            d="M250 420 C 250 420 430 310 430 180 A 85 85 0 0 0 250 120 A 85 85 0 0 0 70 180 C 70 310 250 420 250 420"
+            /* NEW PATH: Starts at bottom tip, draws UP the left side (clockwise), and finishes back at the bottom */
+            d="M 250 420 C 250 420 70 310 70 180 A 85 85 0 0 1 250 120 A 85 85 0 0 1 430 180 C 430 310 250 420 250 420"
             fill="none" 
             stroke="#B59461"
             strokeWidth="12"
