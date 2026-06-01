@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+
 use App\Models\Rsvp;
 use Illuminate\Http\Request;
 use App\Exports\RsvpExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
 
 class RsvpController extends Controller
 {
@@ -98,7 +100,7 @@ class RsvpController extends Controller
         return $pdf->download('Wedding_Guest_List.pdf');
     }
 
-    // --- DELETE RSVP FUNCTION ---
+    // --- DELETE RSVP FUNCTION (WITH HTML EMAIL NOTIFICATION) ---
     public function destroy($id)
     {
         $rsvp = \App\Models\Rsvp::find($id);
@@ -107,11 +109,87 @@ class RsvpController extends Controller
             return response()->json(['message' => 'RSVP not found'], 404);
         }
 
+        // 1. Capture the details
+        $guestName = $rsvp->name;
+        $guestSide = ucfirst($rsvp->side);
+        $phone = $rsvp->phone;
+        $additionalGuests = $rsvp->additional_guests; // This should be an array
+
+        // 2. Delete the record
         $rsvp->delete();
+
+        // 3. Build the HTML Email Body
+        try {
+            // Main Guest Details Table
+            $htmlBody = "
+                <div style='font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #333;'>
+                    <h2 style='color: #dc3545; border-bottom: 2px solid #dc3545; padding-bottom: 10px;'>RSVP Deleted</h2>
+                    <p>An RSVP has been permanently removed from your dashboard.</p>
+                    
+                    <table style='width: 100%; border-collapse: collapse; margin-bottom: 25px;'>
+                        <tr>
+                            <td style='padding: 10px; border: 1px solid #EAEAEA; background-color: #F8F9FA; font-weight: bold; width: 120px;'>Primary Guest</td>
+                            <td style='padding: 10px; border: 1px solid #EAEAEA;'>{$guestName}</td>
+                        </tr>
+                        <tr>
+                            <td style='padding: 10px; border: 1px solid #EAEAEA; background-color: #F8F9FA; font-weight: bold;'>Side</td>
+                            <td style='padding: 10px; border: 1px solid #EAEAEA;'>{$guestSide}</td>
+                        </tr>
+                        <tr>
+                            <td style='padding: 10px; border: 1px solid #EAEAEA; background-color: #F8F9FA; font-weight: bold;'>Phone</td>
+                            <td style='padding: 10px; border: 1px solid #EAEAEA;'>{$phone}</td>
+                        </tr>
+                    </table>
+            ";
+
+            // If there are additional guests, build a second table for them!
+            if (!empty($additionalGuests) && is_array($additionalGuests)) {
+                $htmlBody .= "
+                    <h3 style='color: #B59461; margin-bottom: 10px;'>Additional Guests</h3>
+                    <table style='width: 100%; border-collapse: collapse; margin-bottom: 25px;'>
+                        <thead>
+                            <tr style='background-color: #F8F9FA;'>
+                                <th style='padding: 10px; border: 1px solid #EAEAEA; text-align: center; width: 40px;'>#</th>
+                                <th style='padding: 10px; border: 1px solid #EAEAEA; text-align: left;'>Guest Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                ";
+                
+                foreach ($additionalGuests as $index => $guest) {
+                    $num = $index + 1;
+                    $htmlBody .= "
+                        <tr>
+                            <td style='padding: 10px; border: 1px solid #EAEAEA; text-align: center; color: #888;'>{$num}</td>
+                            <td style='padding: 10px; border: 1px solid #EAEAEA;'>{$guest}</td>
+                        </tr>
+                    ";
+                }
+                
+                $htmlBody .= "</tbody></table>";
+            }
+
+            // Footer
+            $htmlBody .= "
+                    <p style='margin-top: 30px; font-size: 12px; color: #888; text-align: center; border-top: 1px solid #EAEAEA; padding-top: 20px;'>
+                        This is an automated security notification from your Wedding Dashboard.
+                    </p>
+                </div>
+            ";
+
+            // 4. Send the HTML Email
+            Mail::html($htmlBody, function ($message) use ($guestName) {
+                $message->to('anu.sara.wedding@gmail.com')
+                        ->subject("🚨 RSVP Deleted: {$guestName}");
+            });
+
+        } catch (\Exception $e) {
+            // Fails silently on the front-end if email configuration drops
+        }
 
         return response()->json([
             'status' => 'success',
-            'message' => 'RSVP deleted successfully'
+            'message' => 'RSVP deleted successfully and HTML notification sent.'
         ], 200);
     }
 }
