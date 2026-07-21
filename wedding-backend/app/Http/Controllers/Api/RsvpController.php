@@ -192,4 +192,92 @@ class RsvpController extends Controller
             'message' => 'RSVP deleted successfully and HTML notification sent.'
         ], 200);
     }
+
+    // --- BULK DELETE FUNCTION (WITH CONSOLIDATED HTML EMAIL) ---
+    public function bulkDestroy(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if (empty($ids)) {
+            return response()->json(['message' => 'No RSVPs selected'], 400);
+        }
+
+        $rsvps = \App\Models\Rsvp::whereIn('id', $ids)->get();
+
+        if ($rsvps->isEmpty()) {
+            return response()->json(['message' => 'No matching RSVPs found'], 404);
+        }
+
+        // 1. Build the Consolidated HTML Email Body
+        $htmlBody = "
+            <div style='font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #333;'>
+                <h2 style='color: #dc3545; border-bottom: 2px solid #dc3545; padding-bottom: 10px;'>Bulk RSVP Deletion</h2>
+                <p><strong>" . count($rsvps) . " RSVP(s)</strong> have been permanently removed from your dashboard.</p>
+        ";
+
+        foreach ($rsvps as $rsvp) {
+            $guestName = $rsvp->name;
+            $guestSide = ucfirst($rsvp->side);
+            $phone = $rsvp->phone;
+            $additionalGuests = $rsvp->additional_guests;
+
+            $htmlBody .= "
+                <table style='width: 100%; border-collapse: collapse; margin-top: 20px; border: 2px solid #333;'>
+                    <tr>
+                        <td style='padding: 10px; border: 1px solid #EAEAEA; background-color: #F8F9FA; font-weight: bold; width: 120px;'>Primary Guest</td>
+                        <td style='padding: 10px; border: 1px solid #EAEAEA; font-weight: bold;'>{$guestName}</td>
+                    </tr>
+                    <tr>
+                        <td style='padding: 10px; border: 1px solid #EAEAEA; background-color: #F8F9FA; font-weight: bold;'>Side</td>
+                        <td style='padding: 10px; border: 1px solid #EAEAEA;'>{$guestSide}</td>
+                    </tr>
+                    <tr>
+                        <td style='padding: 10px; border: 1px solid #EAEAEA; background-color: #F8F9FA; font-weight: bold;'>Phone</td>
+                        <td style='padding: 10px; border: 1px solid #EAEAEA;'>{$phone}</td>
+                    </tr>
+                </table>
+            ";
+
+            if (!empty($additionalGuests) && is_array($additionalGuests)) {
+                $htmlBody .= "
+                    <h4 style='color: #B59461; margin: 10px 0 5px 0;'>+ Additional Guests</h4>
+                    <table style='width: 100%; border-collapse: collapse; margin-bottom: 10px;'>
+                ";
+                foreach ($additionalGuests as $index => $guest) {
+                    $num = $index + 1;
+                    $htmlBody .= "
+                        <tr>
+                            <td style='padding: 6px 10px; border: 1px solid #EAEAEA; text-align: center; color: #888; width: 40px;'>{$num}</td>
+                            <td style='padding: 6px 10px; border: 1px solid #EAEAEA;'>{$guest}</td>
+                        </tr>
+                    ";
+                }
+                $htmlBody .= "</table>";
+            }
+        }
+
+        $htmlBody .= "
+                <p style='margin-top: 30px; font-size: 12px; color: #888; text-align: center; border-top: 1px solid #EAEAEA; padding-top: 20px;'>
+                    This is an automated security notification from your Wedding Dashboard.
+                </p>
+            </div>
+        ";
+
+        // 2. Delete the records from the database
+        \App\Models\Rsvp::whereIn('id', $ids)->delete();
+
+        // 3. Send the single HTML Email
+        try {
+            Mail::html($htmlBody, function ($message) use ($rsvps) {
+                $count = count($rsvps);
+                $message->to('anu.sara.wedding@gmail.com')
+                        ->subject("🚨 {$count} RSVP(s) Deleted");
+            });
+        } catch (\Exception $e) {}
+
+        return response()->json([
+            'status' => 'success',
+            'message' => count($rsvps) . ' RSVP(s) deleted successfully.'
+        ], 200);
+    }
 }

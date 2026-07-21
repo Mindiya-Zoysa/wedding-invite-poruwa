@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Download, Heart, UserCheck, UserX, Lock, FileText, Trash2 } from 'lucide-react';
+import { Users, Download, Heart, UserCheck, UserX, Lock, FileText, Trash2, Search } from 'lucide-react';
 import Swal from 'sweetalert2';
 
 const Dashboard = () => {
@@ -52,6 +52,8 @@ const Dashboard = () => {
 
   // --- NEW: FILTER STATE & LOGIC ---
   const [filter, setFilter] = useState('all'); // Options: 'all', 'yes', 'no'
+  const [searchTerm, setSearchTerm] = useState(''); // Stores the search input
+  const [selectedRsvps, setSelectedRsvps] = useState([]); // Stores checked box IDs
 
   // --- NEW: DELETE RSVP FUNCTION ---
   const handleDelete = (id, name) => {
@@ -85,10 +87,68 @@ const Dashboard = () => {
     });
   };
 
-  // This creates a new array of guests based on which button you clicked
+  // --- CHECKBOX LOGIC ---
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      // Select all currently visible filtered rows
+      setSelectedRsvps(filteredRsvps.map(r => r.id));
+    } else {
+      setSelectedRsvps([]);
+    }
+  };
+
+  const handleSelectOne = (e, id) => {
+    if (e.target.checked) {
+      setSelectedRsvps([...selectedRsvps, id]);
+    } else {
+      setSelectedRsvps(selectedRsvps.filter(selectedId => selectedId !== id));
+    }
+  };
+
+  // --- BULK DELETE FUNCTION ---
+  const handleBulkDelete = () => {
+    Swal.fire({
+      title: 'Delete Selected?',
+      text: `Are you sure you want to delete ${selectedRsvps.length} guest(s)?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#888',
+      confirmButtonText: 'Yes, delete them!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await fetch(`http://127.0.0.1:8000/api/rsvp/bulk`, {
+            method: 'DELETE',
+            headers: { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json' 
+            },
+            body: JSON.stringify({ ids: selectedRsvps })
+          });
+
+          if (response.ok) {
+            // Remove deleted items from React state instantly
+            setRsvps(rsvps.filter(rsvp => !selectedRsvps.includes(rsvp.id)));
+            setSelectedRsvps([]); // Clear checkboxes
+            Swal.fire('Deleted!', 'The selected guests have been removed.', 'success');
+          } else {
+            Swal.fire('Error!', 'Failed to delete selected RSVPs.', 'error');
+          }
+        } catch (error) {
+          Swal.fire('Error!', 'Could not connect to the server.', 'error');
+        }
+      }
+    });
+  };
+
+  // Filters by attendance AND search term (checks name or phone)
   const filteredRsvps = rsvps.filter(rsvp => {
-    if (filter === 'all') return true;
-    return rsvp.attending === filter;
+    const matchesFilter = filter === 'all' || rsvp.attending === filter;
+    const matchesSearch = 
+      rsvp.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      rsvp.phone.includes(searchTerm);
+    return matchesFilter && matchesSearch;
   });
 
   // --- 1. RENDER LOGIN SCREEN (If not authenticated) ---
@@ -168,28 +228,62 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {/* --- NEW: FILTER BUTTONS --- */}
-        <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-          {['all', 'yes', 'no'].map((f) => (
-            <button 
-              key={f}
-              onClick={() => setFilter(f)}
-              style={{
-                padding: '8px 20px',
-                borderRadius: '20px',
-                border: '1px solid #B59461',
-                backgroundColor: filter === f ? '#B59461' : 'transparent',
-                color: filter === f ? 'white' : '#B59461',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                fontSize: '13px',
-                textTransform: 'capitalize',
-                transition: 'all 0.2s ease'
-              }}
-            >
-              {f === 'all' ? 'All Guests' : f === 'yes' ? 'Attending Only' : 'Declined Only'}
-            </button>
-          ))}
+        {/* --- CONTROLS ROW: FILTERS & SEARCH --- */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '15px' }}>
+          
+          {/* Left Side: Filter Tabs */}
+          <div style={{ display: 'flex', gap: '10px' }}>
+            {['all', 'yes', 'no'].map((f) => (
+              <button 
+                key={f}
+                onClick={() => {
+                  setFilter(f);
+                  setSelectedRsvps([]); // Clear selections when changing tabs
+                }}
+                style={{
+                  padding: '8px 20px',
+                  borderRadius: '20px',
+                  border: '1px solid #B59461',
+                  backgroundColor: filter === f ? '#B59461' : 'transparent',
+                  color: filter === f ? 'white' : '#B59461',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  fontSize: '13px',
+                  textTransform: 'capitalize',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {f === 'all' ? 'All Guests' : f === 'yes' ? 'Attending Only' : 'Declined Only'}
+              </button>
+            ))}
+          </div>
+
+          {/* Right Side: Bulk Delete & Search Bar */}
+          <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+            
+            {/* Show Bulk Delete button ONLY if items are checked */}
+            {selectedRsvps.length > 0 && (
+              <button 
+                onClick={handleBulkDelete}
+                style={{ backgroundColor: '#dc3545', color: 'white', border: 'none', padding: '8px 15px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '5px', boxShadow: '0 2px 5px rgba(220, 53, 69, 0.2)' }}
+              >
+                <Trash2 size={16} /> Delete Selected ({selectedRsvps.length})
+              </button>
+            )}
+
+            {/* Search Input */}
+            <div style={{ position: 'relative' }}>
+              <input 
+                type="text" 
+                placeholder="Search by name or phone..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{ padding: '10px 10px 10px 35px', border: '1px solid #DDD', borderRadius: '8px', fontSize: '14px', width: '250px', outline: 'none' }}
+              />
+              <Search size={18} color="#888" style={{ position: 'absolute', left: '10px', top: '11px' }} />
+            </div>
+          </div>
+
         </div>
 
         {/* Guest Data Table */}
@@ -201,41 +295,59 @@ const Dashboard = () => {
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead style={{ backgroundColor: '#F8F9FA', borderBottom: '2px solid #EAEAEA' }}>
                   <tr>
-                    <th style={{ padding: '15px 20px', color: '#555', fontSize: '14px' }}>Primary Name</th>
-                    <th style={{ padding: '15px 20px', color: '#555', fontSize: '14px' }}>Phone</th>
-                    <th style={{ padding: '15px 20px', color: '#555', fontSize: '14px' }}>Side</th>
-                    <th style={{ padding: '15px 20px', color: '#555', fontSize: '14px', textAlign: 'center' }}>Party Size</th>
-                    <th style={{ padding: '15px 20px', color: '#555', fontSize: '14px' }}>Extra Guests</th>
-                    <th style={{ padding: '15px 20px', color: '#555', fontSize: '14px' }}>Message</th>
-                    {/* NEW: Action Header */}
-                    <th style={{ padding: '15px 20px', color: '#555', fontSize: '14px', textAlign: 'center' }}>Action</th>
+                    {/* NEW: Master Checkbox Header */}
+                    <th style={{ padding: '15px 15px', textAlign: 'center', width: '40px' }}>
+                      <input 
+                        type="checkbox" 
+                        onChange={handleSelectAll} 
+                        checked={filteredRsvps.length > 0 && selectedRsvps.length === filteredRsvps.length}
+                        style={{ cursor: 'pointer', width: '16px', height: '16px' }}
+                      />
+                    </th>
+                    <th style={{ padding: '15px 10px', color: '#555', fontSize: '14px' }}>Primary Name</th>
+                    <th style={{ padding: '15px 10px', color: '#555', fontSize: '14px' }}>Phone</th>
+                    <th style={{ padding: '15px 10px', color: '#555', fontSize: '14px' }}>Side</th>
+                    <th style={{ padding: '15px 10px', color: '#555', fontSize: '14px', textAlign: 'center' }}>Party Size</th>
+                    <th style={{ padding: '15px 10px', color: '#555', fontSize: '14px' }}>Extra Guests</th>
+                    <th style={{ padding: '15px 10px', color: '#555', fontSize: '14px' }}>Message</th>
+                    <th style={{ padding: '15px 10px', color: '#555', fontSize: '14px', textAlign: 'center' }}>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredRsvps.map((rsvp) => (
-                    <tr key={rsvp.id} style={{ borderBottom: '1px solid #EAEAEA', backgroundColor: rsvp.attending === 'no' ? '#fcfcfc' : 'white' }}>
-                      <td style={{ padding: '15px 20px', fontWeight: 'bold', color: rsvp.attending === 'no' ? '#aaa' : '#333' }}>
+                    <tr key={rsvp.id} style={{ borderBottom: '1px solid #EAEAEA', backgroundColor: rsvp.attending === 'no' ? '#fcfcfc' : selectedRsvps.includes(rsvp.id) ? '#fff8eb' : 'white' }}>
+                      
+                      {/* NEW: Individual Row Checkbox */}
+                      <td style={{ padding: '15px 15px', textAlign: 'center' }}>
+                        <input 
+                          type="checkbox" 
+                          checked={selectedRsvps.includes(rsvp.id)}
+                          onChange={(e) => handleSelectOne(e, rsvp.id)}
+                          style={{ cursor: 'pointer', width: '16px', height: '16px' }}
+                        />
+                      </td>
+
+                      <td style={{ padding: '15px 10px', fontWeight: 'bold', color: rsvp.attending === 'no' ? '#aaa' : '#333' }}>
                         {rsvp.name} {rsvp.attending === 'no' && <span style={{ color: '#d93025', fontSize: '12px', fontWeight: 'normal', marginLeft: '5px' }}>(Declined)</span>}
                       </td>
-                      <td style={{ padding: '15px 20px', color: '#666' }}>{rsvp.phone}</td>
-                      <td style={{ padding: '15px 20px' }}>
+                      <td style={{ padding: '15px 10px', color: '#666' }}>{rsvp.phone}</td>
+                      <td style={{ padding: '15px 10px' }}>
                         <span style={{ backgroundColor: rsvp.side === 'yasara' ? '#ffe8f0' : '#e8f4ff', color: rsvp.side === 'yasara' ? '#e83e8c' : '#007bff', padding: '5px 10px', borderRadius: '20px', fontSize: '12px', fontWeight: 'bold', textTransform: 'capitalize' }}>
                           {rsvp.side}
                         </span>
                       </td>
-                      <td style={{ padding: '15px 20px', textAlign: 'center', fontWeight: 'bold', fontSize: '16px', color: '#B59461' }}>
+                      <td style={{ padding: '15px 10px', textAlign: 'center', fontWeight: 'bold', fontSize: '16px', color: '#B59461' }}>
                         {rsvp.guest_count}
                       </td>
-                      <td style={{ padding: '15px 20px', color: '#666', fontSize: '13px' }}>
+                      <td style={{ padding: '15px 10px', color: '#666', fontSize: '13px' }}>
                         {rsvp.additional_guests && rsvp.additional_guests.length > 0 
                           ? rsvp.additional_guests.join(', ') 
                           : '-'}
                       </td>
-                      <td style={{ padding: '15px 20px', color: '#666', fontSize: '13px', maxWidth: '200px' }}>
+                      <td style={{ padding: '15px 10px', color: '#666', fontSize: '13px', maxWidth: '200px' }}>
                         {rsvp.message || '-'}
                       </td>
-                      {/* NEW: Action Cell with Delete Button */}
-                      <td style={{ padding: '15px 20px', textAlign: 'center' }}>
+                      <td style={{ padding: '15px 10px', textAlign: 'center' }}>
                         <button 
                           onClick={() => handleDelete(rsvp.id, rsvp.name)}
                           style={{ backgroundColor: 'transparent', border: 'none', color: '#dc3545', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', padding: '8px', borderRadius: '5px', transition: 'background-color 0.2s' }}
@@ -250,8 +362,8 @@ const Dashboard = () => {
                   ))}
                   {filteredRsvps.length === 0 && (
                     <tr>
-                      <td colSpan="6" style={{ padding: '40px', textAlign: 'center', color: '#888' }}>
-                        No guests found for this filter.
+                      <td colSpan="8" style={{ padding: '40px', textAlign: 'center', color: '#888' }}>
+                        {searchTerm ? 'No guests match your search.' : 'No guests found for this filter.'}
                       </td>
                     </tr>
                   )}
@@ -260,7 +372,6 @@ const Dashboard = () => {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );

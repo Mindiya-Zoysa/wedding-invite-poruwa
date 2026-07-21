@@ -9,4 +9,5 @@ Route::post('/rsvp', [RsvpController::class, 'store']);
 
 Route::get('/rsvp/export', [RsvpController::class, 'export']);
 Route::get('/rsvp/export-pdf', [RsvpController::class, 'exportPdf']);
+Route::delete('/rsvp/bulk', [RsvpController::class, 'bulkDestroy']);
 Route::delete('/rsvp/{id}', [RsvpController::class, 'destroy']);
