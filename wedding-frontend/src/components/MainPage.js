@@ -268,7 +268,7 @@ const MainPage = ({ onGoToProgram }) => {
   };
   
   const copyToClipboard = () => {
-    navigator.clipboard.writeText("1234567890"); 
+    navigator.clipboard.writeText("0000212015"); 
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
