@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import ProgramModal from './ProgramModal';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { MapPin, CalendarPlus, CheckCircle, Copy, Camera, Users, Heart, Mail, ArrowUp, Trash2, Sparkles, Music } from 'lucide-react';
+import { MapPin, CalendarPlus, CheckCircle, Copy, Camera, Users, Heart, Mail, ArrowUp, Trash2, Sparkles, BookOpen, Music, Utensils } from 'lucide-react';
 
 // IMPORTANT: Import your images here! 
 const HERO_IMAGE = "beautiful-bouquet-wild-flowers-hands-bride.jpg"; 
@@ -924,10 +924,10 @@ const MainPage = ({ onGoToProgram }) => {
 
         <div style={{ maxWidth: '600px', margin: '0 auto', minHeight: '200px' }}>
           
-          {/* THE NEW MENU TAB CONTENT */}
+          {/* THE MENU TAB CONTENT */}
           {activeTab === 'menu' && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-              <Music size={32} color="#B59461" style={{ margin: '0 auto 15px auto' }} />
+              <Utensils size={32} color="#B59461" style={{ margin: '0 auto 15px auto' }} />
               <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '5px' }}>මංගල භෝජන සංග්‍රහයේ රසබර තොරතුරු... </h3>
               <p style={{ color: '#888', fontSize: '14px', marginBottom: '30px' }}>ළඟදීම ඔබ වෙත.</p>
               
