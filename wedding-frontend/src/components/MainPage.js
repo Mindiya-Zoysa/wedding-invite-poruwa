@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import ProgramModal from './ProgramModal';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { MapPin, CalendarPlus, CheckCircle, Copy, Camera, Users, Heart, Mail, ArrowUp, Trash2, Sparkles, BookOpen, Music, Utensils } from 'lucide-react';
+import { MapPin, CalendarPlus, CheckCircle, Copy, Camera, Users, Heart, Mail, ArrowUp, Trash2, Sparkles, Utensils, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 // IMPORTANT: Import your images here! 
 const HERO_IMAGE = "beautiful-bouquet-wild-flowers-hands-bride.jpg"; 
@@ -71,6 +71,8 @@ const CountdownTimer = ({ targetDate }) => {
     </div>
   );
 };
+
+
 
 const MainPage = ({ onGoToProgram }) => {
   // --- REFS & SCROLL STATE FOR FLOATING BUTTON ---
@@ -355,44 +357,93 @@ const MainPage = ({ onGoToProgram }) => {
     });
   };
 
-  // --- WEDDING HYMNS DATA & FUNCTION ---
-  // const weddingHymns = [
-  //   {
-  //     title: "Entrance Hymn",
-  //     name: "All Are Welcome",
-  //     lyrics: "Let us build a house where love can dwell<br/>And all can safely live,<br/>A place where saints and children tell<br/>How hearts learn to forgive."
-  //   },
-  //   {
-  //     title: "Offertory Hymn",
-  //     name: "Take Our Bread",
-  //     lyrics: "Take our bread, we ask you,<br/>Take our hearts, we love you,<br/>Take our lives, oh Father,<br/>We are yours, we are yours."
-  //   },
-  //   {
-  //     title: "Communion Hymn",
-  //     name: "One Bread, One Body",
-  //     lyrics: "One bread, one body,<br/>One Lord of all,<br/>One cup of blessing which we bless.<br/>And we, though many,<br/>Throughout the earth,<br/>We are one body in this one Lord."
-  //   },
-  //   {
-  //     title: "Recessional Hymn",
-  //     name: "Joyful, Joyful, We Adore Thee",
-  //     lyrics: "Joyful, joyful, we adore Thee,<br/>God of glory, Lord of love;<br/>Hearts unfold like flowers before Thee,<br/>Opening to the sun above."
-  //   }
-  // ];
+  // --- WEDDING MENU DATA ---
+  const weddingMenu = [
+    {
+      category: "Appetizers & Bites",
+      icon: "🥟",
+      items: [
+        "Mix Seafood Puffs", "Bacon-Wrapped Sausage", "Meatball Mini Sliders", "Buffalo Chicken Wings",
+        "Greek Cucumber Cups", "Mango Salad Mini Cups", "Pineapple Mango Bruschetta", "Loaded Mini Baked Potatoes",
+        "Crispy Fried Okra with Yoghurt Dip", "Feta Watermelon Cubes", "Vegetable Summer Roll", "Avocado Cheese Bruschetta",
+        "Tomato Soup Garlic Cheese", "Mix Vegetable Puffs", "Potato Rolls", "Herbs Cheesy Potato Bites",
+        "Cucumber Cheese Bites", "Mix Vegetable Pinwheel", "Lawras fresh salad mini sandwich", "Crab Salad on Cream Crackers"
+      ]
+    },
+    {
+      category: "The Main Course",
+      icon: "🍲",
+      items: [
+        "Vegetable Fried Rice", "Seafood Maquba Rice", "Lavenro Mix Spicy Rice",
+        "Honey Garlic Grill Chicken with Orange Sauce", "Pork Action Station", "Baberian Action Platter", "Mutton Bhuna",
+        "Mix Seafood Devilled",
+        "Chicken Spicy Chili Noodles", "Sausage and Bacon Pasta", "Seafood Lasagna",
+        "Hot Butter Mushroom", "Sri Lankan Cashew Curry", "Roast Vegetable with Hot Cheesy Sauce", "Mixed Vegetable Au-Gratin"
+      ]
+    },
+    {
+      category: "Salad Bar",
+      icon: "🥗",
+      items: [
+        "Cabbage Egg Salad", "Egg Bacon Ranch Salad", "Classic Creamy Chicken Salad", "Hawaiian Chicken Salad",
+        "Crispy Chicken Salad", "Roast Vegetable with Cornseed Salad", "Apple Slow Salad", "Olive Salad",
+        "Fried Eggplant Salad", "Burrata Salad", "Roast Vegetable Cous Cous Salad", "Black Bean Corn Salad",
+        "Savory Creamy Potato Salad", "Lavenro Mojito Salad", "Mango Crunchy Salad", "Old Fashioned Macaroni Salad",
+        "Spicy Noodles Shaved Vegi Salad", "Cold Meat Platter"
+      ]
+    },
+    {
+      category: "Condiments & Accompaniments",
+      icon: "🌶️",
+      items: [
+        "Fried Spicy Egg Plant", "Spicy Egg Bites", "Mini Ulundu Wade", "Savory Thatti Crackers",
+        "Banana Blossom Fry Savory Mix", "Mix Dhall Pakora", "Savory Spicy Risotto Balls", "Corn & Vegetable Fritters",
+        "Garlic Onion Pastry Tapas", "Spicy Mushroom Pakora", "Batter Fried Mix Leaf", "Fried Bitter Gourd Badun",
+        "Malay Pickle", "Papadam Mix", "Fish Nuggets", "Vegetable Pakora",
+        "Mango Chutney", "Mix Chutney", "Mango Salsa", "Chili Paste", "Mix Chili Bajji",
+        "Mix Fruit Pickle", "Tomato Red Onion Chutney", "Garlic Mustard Pickle"
+      ]
+    },
+    {
+      category: "Desserts & Sweets",
+      icon: "🍰",
+      items: [
+        "Cut Fruit (Pineapple & Papaya)", "Vanilla Ice Cream", "Watalappan", "Blueberry Mousse Cake",
+        "Orange & Chocolate Mousse", "Chocolate Tart", "Mango Parfait", "Sacher Cake", "Assorted French Pastry",
+        "Pineapple Upside Down Cake", "Mango Cheese Cake", "Nanaimo Bar", "Baklava",
+        "Chocolate Layer Mousse in Glass", "Dutch Apple Cake", "Dark Chocolate Fountain"
+      ]
+    },
+    {
+      category: "Signature Shooters",
+      icon: "🍹",
+      items: [
+        "Pineapple Ginger Basil Shooter", "Blue Lime Mint Shooter", "Watermelon Margarita Shooter",
+        "Passion Fruit Lime Mint Shooter", "Coconut Cream Lime Shooter", "Mixed Berry Shooter",
+        "Honey Rosemary Shooter", "Strawberry Mint Kasa Kasa Shooter", "Chili & Lime Shooter", "Peach Basil Shooter"
+      ]
+    }
+  ];
 
-  // const openHymnModal = (hymn) => {
-  //   Swal.fire({
-  //     title: `<span style="font-family: serif; font-size: 28px; color: #B59461;">${hymn.title}</span>`,
-  //     html: `
-  //       <div style="font-family: sans-serif; color: #555; line-height: 1.8; padding: 10px;">
-  //         <p style="font-weight: bold; font-size: 18px; color: #333; margin-top: 0;">"${hymn.name}"</p>
-  //         <p style="font-style: italic; font-size: 15px;">${hymn.lyrics}</p>
-  //       </div>
-  //     `,
-  //     confirmButtonColor: '#B59461',
-  //     confirmButtonText: 'Close',
-  //     background: '#FDFBF7'
-  //   });
-  // };
+  // --- MENU MODAL FUNCTION ---
+  const openMenuModal = (section) => {
+    // This turns the array of food items into a nice HTML list
+    const itemsHtml = section.items.map(item => `<li style="margin-bottom: 8px;">${item}</li>`).join('');
+
+    Swal.fire({
+      title: `<div style="display: flex; flex-direction: column; align-items: center; gap: 10px;"><span style="font-size: 32px;">${section.icon}</span><span style="font-family: serif; font-size: 28px; color: #B59461;">${section.category}</span></div>`,
+      html: `
+        <div style="font-family: sans-serif; color: #555; line-height: 1.6; padding: 10px 20px; text-align: left; max-height: 50vh; overflow-y: auto;">
+          <ul style="list-style-type: none; padding: 0; margin: 0; font-size: 15px; text-align: center;">
+            ${itemsHtml}
+          </ul>
+        </div>
+      `,
+      confirmButtonColor: '#B59461',
+      confirmButtonText: 'Close',
+      background: '#FDFBF7'
+    });
+  };
 
   // --- TIMELINE DATA ARRAY ---
   // We define this here so the JSX below stays clean and easy to read
@@ -929,15 +980,15 @@ const MainPage = ({ onGoToProgram }) => {
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <Utensils size={32} color="#B59461" style={{ margin: '0 auto 15px auto' }} />
               <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '5px' }}>මංගල භෝජන සංග්‍රහයේ රසබර තොරතුරු... </h3>
-              <p style={{ color: '#888', fontSize: '14px', marginBottom: '30px' }}>ළඟදීම ඔබ වෙත.</p>
+              <p style={{ color: '#888', fontSize: '14px', marginBottom: '30px' }}>A glimpse into our Golden Love wedding feast.</p>
               
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
-                {/* {menu.map((hymn, i) => (
+                {weddingMenu.map((section, index) => (
                   <motion.button 
-                    key={i} 
+                    key={index} 
                     whileHover={{ scale: 1.02, backgroundColor: '#B59461', color: '#fff' }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => openHymnModal(hymn)}
+                    onClick={() => openMenuModal(section)}
                     style={{ 
                       backgroundColor: '#fff', 
                       border: '1px solid #B59461', 
@@ -953,13 +1004,13 @@ const MainPage = ({ onGoToProgram }) => {
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
-                      gap: '5px'
+                      gap: '8px'
                     }}
                   >
-                    <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', opacity: 0.8 }}>{hymn.title}</span>
-                    <span>{hymn.name}</span>
+                    <span style={{ fontSize: '24px' }}>{section.icon}</span>
+                    <span style={{ fontSize: '15px', textTransform: 'uppercase', letterSpacing: '1px' }}>{section.category}</span>
                   </motion.button>
-                ))} */}
+                ))}
               </div>
             </motion.div>
           )}
