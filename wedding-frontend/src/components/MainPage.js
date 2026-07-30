@@ -1111,7 +1111,7 @@ const MainPage = ({ onGoToProgram }) => {
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <Utensils size={32} color="#B59461" style={{ margin: '0 auto 15px auto' }} />
               <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '5px' }}>මංගල භෝජන සංග්‍රහයේ රසබර තොරතුරු... </h3>
-              <p style={{ color: '#888', fontSize: '14px', marginBottom: '30px' }}>ස්වර්ණමය ආදරයේ මංගල භෝජන සංග්‍රහයෙන් දසුනක්</p>
+              <p style={{ color: '#888', fontSize: '14px', marginBottom: '30px' }}>රාජකීය භෝජන සංග්‍රහයේ මෙනුව...</p>
               
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
                 {weddingMenu.map((section, index) => (
