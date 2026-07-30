@@ -72,7 +72,82 @@ const CountdownTimer = ({ targetDate }) => {
   );
 };
 
+// --- HELPER COMPONENT: MENU CAROUSEL MODAL ---
+const MenuCarouselModal = ({ section, onClose }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
+  const handleNext = (e) => {
+    e.stopPropagation(); // Prevents clicks from bleeding through
+    setCurrentIndex((prev) => (prev + 1) % section.items.length);
+  };
+
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev - 1 + section.items.length) % section.items.length);
+  };
+
+  if (!section) return null;
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.85)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} style={{ backgroundColor: '#FDFBF7', width: '100%', maxWidth: '450px', borderRadius: '16px', overflow: 'hidden', position: 'relative', boxShadow: '0 20px 50px rgba(0,0,0,0.3)' }}>
+        
+        {/* Close Button */}
+        <button onClick={onClose} style={{ position: 'absolute', top: 15, right: 15, backgroundColor: 'rgba(255,255,255,0.9)', border: 'none', borderRadius: '50%', width: '35px', height: '35px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 10 }}>
+          <X size={20} color="#333" />
+        </button>
+
+        {/* Image Container with Navigation */}
+        <div style={{ position: 'relative', width: '100%', height: '320px', backgroundColor: '#EAEAEA' }}>
+          <img 
+            src={section.items[currentIndex].image} 
+            alt={section.items[currentIndex].name} 
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+          />
+          
+          {/* Prev/Next Navigation Buttons */}
+          <button onClick={handlePrev} style={{ position: 'absolute', top: '50%', left: 15, transform: 'translateY(-50%)', backgroundColor: 'white', border: 'none', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.2)' }}>
+            <ChevronLeft size={24} color="#B59461" />
+          </button>
+          
+          <button onClick={handleNext} style={{ position: 'absolute', top: '50%', right: 15, transform: 'translateY(-50%)', backgroundColor: 'white', border: 'none', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.2)' }}>
+            <ChevronRight size={24} color="#B59461" />
+          </button>
+        </div>
+
+        {/* Details & Interactive Dots */}
+        <div style={{ padding: '25px 20px', textAlign: 'center' }}>
+          <span style={{ fontSize: '24px' }}>{section.icon}</span>
+          <h4 style={{ margin: '10px 0 5px 0', fontSize: '22px', fontFamily: 'serif', color: '#4A4A4A' }}>
+            {section.items[currentIndex].name}
+          </h4>
+          <p style={{ margin: '0 0 20px 0', fontSize: '13px', color: '#888', textTransform: 'uppercase', letterSpacing: '1px' }}>
+            {section.category} - {currentIndex + 1} of {section.items.length}
+          </p>
+
+          {/* Pagination Dots (Active dot becomes wider like iOS!) */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', flexWrap: 'wrap', padding: '0 10px', maxHeight: '40px', overflowY: 'auto' }}>
+            {section.items.map((_, idx) => (
+              <div 
+                key={idx} 
+                onClick={() => setCurrentIndex(idx)} 
+                style={{ 
+                  width: idx === currentIndex ? '24px' : '8px', 
+                  height: '8px', 
+                  borderRadius: '4px', 
+                  backgroundColor: idx === currentIndex ? '#B59461' : '#DDD', 
+                  cursor: 'pointer', 
+                  transition: 'all 0.3s ease' 
+                }} 
+              />
+            ))}
+          </div>
+        </div>
+
+      </motion.div>
+    </div>
+  );
+};
 
 const MainPage = ({ onGoToProgram }) => {
   // --- REFS & SCROLL STATE FOR FLOATING BUTTON ---
@@ -109,6 +184,7 @@ const MainPage = ({ onGoToProgram }) => {
 
   // --- STATE FOR TABS & DYNAMIC RSVP ---
   const [activeTab, setActiveTab] = useState('menu');
+  const [activeMenuSection, setActiveMenuSection] = useState(null);
   const [copied, setCopied] = useState(false);
   // --- INVITATION CARD STATE & PDF GENERATOR ---
   const [finalGuestNames, setFinalGuestNames] = useState('Guest'); 
@@ -363,87 +439,142 @@ const MainPage = ({ onGoToProgram }) => {
       category: "Appetizers & Bites",
       icon: "🥟",
       items: [
-        "Mix Seafood Puffs", "Bacon-Wrapped Sausage", "Meatball Mini Sliders", "Buffalo Chicken Wings",
-        "Greek Cucumber Cups", "Mango Salad Mini Cups", "Pineapple Mango Bruschetta", "Loaded Mini Baked Potatoes",
-        "Crispy Fried Okra with Yoghurt Dip", "Feta Watermelon Cubes", "Vegetable Summer Roll", "Avocado Cheese Bruschetta",
-        "Tomato Soup Garlic Cheese", "Mix Vegetable Puffs", "Potato Rolls", "Herbs Cheesy Potato Bites",
-        "Cucumber Cheese Bites", "Mix Vegetable Pinwheel", "Lawras fresh salad mini sandwich", "Crab Salad on Cream Crackers"
+        { name: "Mix Seafood Puffs", image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600&q=80" },
+        { name: "Bacon-Wrapped Sausage", image: "https://images.unsplash.com/photo-1627308595229-7830f5c9c66e?auto=format&fit=crop&w=600&q=80" },
+        { name: "Meatball Mini Sliders", image: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80" },
+        { name: "Buffalo Chicken Wings", image: "https://images.unsplash.com/photo-1569691899455-88464f6d3ce1?auto=format&fit=crop&w=600&q=80" },
+        { name: "Greek Cucumber Cups", image: "https://images.unsplash.com/photo-1583663848850-46af132dc08e?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mango Salad Mini Cups", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" },
+        { name: "Pineapple Mango Bruschetta", image: "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&w=600&q=80" },
+        { name: "Loaded Mini Baked Potatoes", image: "https://images.unsplash.com/photo-1511690078903-71dc5a49f5e3?auto=format&fit=crop&w=600&q=80" },
+        { name: "Crispy Fried Okra with Yoghurt Dip", image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80" },
+        { name: "Feta Watermelon Cubes", image: "https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?auto=format&fit=crop&w=600&q=80" },
+        { name: "Vegetable Summer Roll", image: "https://images.unsplash.com/photo-1556571217-062e783457a4?auto=format&fit=crop&w=600&q=80" },
+        { name: "Avocado Cheese Bruschetta", image: "https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?auto=format&fit=crop&w=600&q=80" },
+        { name: "Tomato Soup Garlic Cheese", image: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mix Vegetable Puffs", image: "https://images.unsplash.com/photo-1601000938259-9e92002320b2?auto=format&fit=crop&w=600&q=80" },
+        { name: "Potato Rolls", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" },
+        { name: "Herbs Cheesy Potato Bites", image: "https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=600&q=80" },
+        { name: "Cucumber Cheese Bites", image: "https://images.unsplash.com/photo-1628268909376-e8c44bb3153f?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mix Vegetable Pinwheel", image: "https://images.unsplash.com/photo-1528735000313-039ec3a473f0?auto=format&fit=crop&w=600&q=80" },
+        { name: "Lawras Fresh Salad Mini Sandwich", image: "https://images.unsplash.com/photo-1528736235302-52922df5c122?auto=format&fit=crop&w=600&q=80" },
+        { name: "Crab Salad on Cream Crackers", image: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=600&q=80" }
       ]
     },
     {
       category: "The Main Course",
       icon: "🍲",
       items: [
-        "Vegetable Fried Rice", "Seafood Maquba Rice", "Lavenro Mix Spicy Rice",
-        "Honey Garlic Grill Chicken with Orange Sauce", "Pork Action Station", "Baberian Action Platter", "Mutton Bhuna",
-        "Mix Seafood Devilled",
-        "Chicken Spicy Chili Noodles", "Sausage and Bacon Pasta", "Seafood Lasagna",
-        "Hot Butter Mushroom", "Sri Lankan Cashew Curry", "Roast Vegetable with Hot Cheesy Sauce", "Mixed Vegetable Au-Gratin"
+        { name: "Vegetable Fried Rice", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=600&q=80" },
+        { name: "Seafood Maquba Rice", image: "https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&fit=crop&w=600&q=80" },
+        { name: "Lavenro Mix Spicy Rice", image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=600&q=80" },
+        { name: "Honey Garlic Grill Chicken with Orange Sauce", image: "https://images.unsplash.com/photo-1598514982205-f36b96d1e8d4?auto=format&fit=crop&w=600&q=80" },
+        { name: "Pork Action Station", image: "https://images.unsplash.com/photo-1516362584175-5ad888c34f3b?auto=format&fit=crop&w=600&q=80" },
+        { name: "Baberian Action Platter", image: "https://images.unsplash.com/photo-1544025162-836889e02377?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mutton Bhuna", image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mix Seafood Devilled", image: "https://images.unsplash.com/photo-1555989808-167d307779b9?auto=format&fit=crop&w=600&q=80" },
+        { name: "Chicken Spicy Chili Noodles", image: "https://images.unsplash.com/photo-1617093727343-374698b1b08d?auto=format&fit=crop&w=600&q=80" },
+        { name: "Sausage and Bacon Pasta", image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=600&q=80" },
+        { name: "Seafood Lasagna", image: "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?auto=format&fit=crop&w=600&q=80" },
+        { name: "Hot Butter Mushroom", image: "https://images.unsplash.com/photo-1555196259-c62a89b142ef?auto=format&fit=crop&w=600&q=80" },
+        { name: "Sri Lankan Cashew Curry", image: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=600&q=80" },
+        { name: "Roast Vegetable with Hot Cheesy Sauce", image: "https://images.unsplash.com/photo-1583590089222-7779a5ed68d3?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mixed Vegetable Au-Gratin", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" }
       ]
     },
     {
       category: "Salad Bar",
       icon: "🥗",
       items: [
-        "Cabbage Egg Salad", "Egg Bacon Ranch Salad", "Classic Creamy Chicken Salad", "Hawaiian Chicken Salad",
-        "Crispy Chicken Salad", "Roast Vegetable with Cornseed Salad", "Apple Slow Salad", "Olive Salad",
-        "Fried Eggplant Salad", "Burrata Salad", "Roast Vegetable Cous Cous Salad", "Black Bean Corn Salad",
-        "Savory Creamy Potato Salad", "Lavenro Mojito Salad", "Mango Crunchy Salad", "Old Fashioned Macaroni Salad",
-        "Spicy Noodles Shaved Vegi Salad", "Cold Meat Platter"
+        { name: "Cabbage Egg Salad", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" },
+        { name: "Egg Bacon Ranch Salad", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80" },
+        { name: "Classic Creamy Chicken Salad", image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80" },
+        { name: "Hawaiian Chicken Salad", image: "https://images.unsplash.com/photo-1572449043416-55f4685c9bb7?auto=format&fit=crop&w=600&q=80" },
+        { name: "Crispy Chicken Salad", image: "https://images.unsplash.com/photo-1580013759032-1d65826f536c?auto=format&fit=crop&w=600&q=80" },
+        { name: "Roast Vegetable with Cornseed Salad", image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=600&q=80" },
+        { name: "Apple Slow Salad", image: "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=600&q=80" },
+        { name: "Olive Salad", image: "https://images.unsplash.com/photo-1551248429-40975aa4de74?auto=format&fit=crop&w=600&q=80" },
+        { name: "Fried Eggplant Salad", image: "https://images.unsplash.com/photo-1598511757337-fe2cafc31ba0?auto=format&fit=crop&w=600&q=80" },
+        { name: "Burrata Salad", image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600&q=80" },
+        { name: "Roast Vegetable Cous Cous Salad", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" },
+        { name: "Black Bean Corn Salad", image: "https://images.unsplash.com/photo-1543362906-acfc16c67564?auto=format&fit=crop&w=600&q=80" },
+        { name: "Savory Creamy Potato Salad", image: "https://images.unsplash.com/photo-1505253758473-96b7015fcd40?auto=format&fit=crop&w=600&q=80" },
+        { name: "Lavenro Mojito Salad", image: "https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mango Crunchy Salad", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" },
+        { name: "Old Fashioned Macaroni Salad", image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80" },
+        { name: "Spicy Noodles Shaved Vegi Salad", image: "https://images.unsplash.com/photo-1557872943-16a5ac26437e?auto=format&fit=crop&w=600&q=80" },
+        { name: "Cold Meat Platter", image: "https://images.unsplash.com/photo-1603048297172-c92544798d5e?auto=format&fit=crop&w=600&q=80" }
       ]
     },
     {
       category: "Condiments & Accompaniments",
       icon: "🌶️",
       items: [
-        "Fried Spicy Egg Plant", "Spicy Egg Bites", "Mini Ulundu Wade", "Savory Thatti Crackers",
-        "Banana Blossom Fry Savory Mix", "Mix Dhall Pakora", "Savory Spicy Risotto Balls", "Corn & Vegetable Fritters",
-        "Garlic Onion Pastry Tapas", "Spicy Mushroom Pakora", "Batter Fried Mix Leaf", "Fried Bitter Gourd Badun",
-        "Malay Pickle", "Papadam Mix", "Fish Nuggets", "Vegetable Pakora",
-        "Mango Chutney", "Mix Chutney", "Mango Salsa", "Chili Paste", "Mix Chili Bajji",
-        "Mix Fruit Pickle", "Tomato Red Onion Chutney", "Garlic Mustard Pickle"
+        { name: "Fried Spicy Egg Plant", image: "https://images.unsplash.com/photo-1596683788390-50d4eb0c1d2e?auto=format&fit=crop&w=600&q=80" },
+        { name: "Spicy Egg Bites", image: "https://images.unsplash.com/photo-1582169505937-b9992bd01ed9?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mini Ulundu Wade", image: "https://images.unsplash.com/photo-1604152135912-00a2f9c522cc?auto=format&fit=crop&w=600&q=80" },
+        { name: "Savory Thatti Crackers", image: "https://images.unsplash.com/photo-1599580665516-e52277d3fbf7?auto=format&fit=crop&w=600&q=80" },
+        { name: "Banana Blossom Fry Savory Mix", image: "https://images.unsplash.com/photo-1555196259-c62a89b142ef?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mix Dhall Pakora", image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80" },
+        { name: "Savory Spicy Risotto Balls", image: "https://images.unsplash.com/photo-1529059997568-3d847b1154f0?auto=format&fit=crop&w=600&q=80" },
+        { name: "Corn & Vegetable Fritters", image: "https://images.unsplash.com/photo-1604724456950-891d4e0b02bc?auto=format&fit=crop&w=600&q=80" },
+        { name: "Garlic Onion Pastry Tapas", image: "https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&w=600&q=80" },
+        { name: "Spicy Mushroom Pakora", image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=600&q=80" },
+        { name: "Batter Fried Mix Leaf", image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80" },
+        { name: "Fried Bitter Gourd Badun", image: "https://images.unsplash.com/photo-1596683788390-50d4eb0c1d2e?auto=format&fit=crop&w=600&q=80" },
+        { name: "Malay Pickle", image: "https://images.unsplash.com/photo-1534800891164-b1f8f01b0ea5?auto=format&fit=crop&w=600&q=80" },
+        { name: "Papadam Mix", image: "https://images.unsplash.com/photo-1626082896492-766af4eb6501?auto=format&fit=crop&w=600&q=80" },
+        { name: "Fish Nuggets", image: "https://images.unsplash.com/photo-1599084924616-e91024b11f77?auto=format&fit=crop&w=600&q=80" },
+        { name: "Vegetable Pakora", image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mango Chutney", image: "https://images.unsplash.com/photo-1582285816922-2616a2d109f3?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mix Chutney", image: "https://images.unsplash.com/photo-1604152135912-00a2f9c522cc?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mango Salsa", image: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?auto=format&fit=crop&w=600&q=80" },
+        { name: "Chili Paste", image: "https://images.unsplash.com/photo-1596683788390-50d4eb0c1d2e?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mix Chili Bajji", image: "https://images.unsplash.com/photo-1604724456950-891d4e0b02bc?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mix Fruit Pickle", image: "https://images.unsplash.com/photo-1534800891164-b1f8f01b0ea5?auto=format&fit=crop&w=600&q=80" },
+        { name: "Tomato Red Onion Chutney", image: "https://images.unsplash.com/photo-1582285816922-2616a2d109f3?auto=format&fit=crop&w=600&q=80" },
+        { name: "Garlic Mustard Pickle", image: "https://images.unsplash.com/photo-1534800891164-b1f8f01b0ea5?auto=format&fit=crop&w=600&q=80" }
       ]
     },
     {
       category: "Desserts & Sweets",
       icon: "🍰",
       items: [
-        "Cut Fruit (Pineapple & Papaya)", "Vanilla Ice Cream", "Watalappan", "Blueberry Mousse Cake",
-        "Orange & Chocolate Mousse", "Chocolate Tart", "Mango Parfait", "Sacher Cake", "Assorted French Pastry",
-        "Pineapple Upside Down Cake", "Mango Cheese Cake", "Nanaimo Bar", "Baklava",
-        "Chocolate Layer Mousse in Glass", "Dutch Apple Cake", "Dark Chocolate Fountain"
+        { name: "Cut Fruit (Pineapple & Papaya)", image: "https://images.unsplash.com/photo-1519999482648-25049ddd37b1?auto=format&fit=crop&w=600&q=80" },
+        { name: "Vanilla Ice Cream", image: "https://images.unsplash.com/photo-1570197781417-0a5237500ee3?auto=format&fit=crop&w=600&q=80" },
+        { name: "Watalappan", image: "https://images.unsplash.com/photo-1515037893149-de7f840978e2?auto=format&fit=crop&w=600&q=80" },
+        { name: "Blueberry Mousse Cake", image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=600&q=80" },
+        { name: "Orange & Chocolate Mousse", image: "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=600&q=80" },
+        { name: "Chocolate Tart", image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mango Parfait", image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=600&q=80" },
+        { name: "Sacher Cake", image: "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=600&q=80" },
+        { name: "Assorted French Pastry", image: "https://images.unsplash.com/photo-1550617931-e17a7b70dce2?auto=format&fit=crop&w=600&q=80" },
+        { name: "Pineapple Upside Down Cake", image: "https://images.unsplash.com/photo-1571115177098-24edf647d730?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mango Cheese Cake", image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80" },
+        { name: "Nanaimo Bar", image: "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=600&q=80" },
+        { name: "Baklava", image: "https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=600&q=80" },
+        { name: "Chocolate Layer Mousse in Glass", image: "https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?auto=format&fit=crop&w=600&q=80" },
+        { name: "Dutch Apple Cake", image: "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?auto=format&fit=crop&w=600&q=80" },
+        { name: "Dark Chocolate Fountain", image: "https://images.unsplash.com/photo-1548842247-c37f3eb6c8e3?auto=format&fit=crop&w=600&q=80" }
       ]
     },
     {
       category: "Signature Shooters",
       icon: "🍹",
       items: [
-        "Pineapple Ginger Basil Shooter", "Blue Lime Mint Shooter", "Watermelon Margarita Shooter",
-        "Passion Fruit Lime Mint Shooter", "Coconut Cream Lime Shooter", "Mixed Berry Shooter",
-        "Honey Rosemary Shooter", "Strawberry Mint Kasa Kasa Shooter", "Chili & Lime Shooter", "Peach Basil Shooter"
+        { name: "Pineapple Ginger Basil Shooter", image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80" },
+        { name: "Blue Lime Mint Shooter", image: "https://images.unsplash.com/photo-1587223075055-82e9a937ddff?auto=format&fit=crop&w=600&q=80" },
+        { name: "Watermelon Margarita Shooter", image: "https://images.unsplash.com/photo-1587888637140-849b589c1050?auto=format&fit=crop&w=600&q=80" },
+        { name: "Passion Fruit Lime Mint Shooter", image: "https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=600&q=80" },
+        { name: "Coconut Cream Lime Shooter", image: "https://images.unsplash.com/photo-1550424562-b91c0db935fb?auto=format&fit=crop&w=600&q=80" },
+        { name: "Mixed Berry Shooter", image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80" },
+        { name: "Honey Rosemary Shooter", image: "https://images.unsplash.com/photo-1509378457069-34ba85c33842?auto=format&fit=crop&w=600&q=80" },
+        { name: "Strawberry Mint Kasa Kasa Shooter", image: "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=600&q=80" },
+        { name: "Chili & Lime Shooter", image: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=600&q=80" },
+        { name: "Peach Basil Shooter", image: "https://images.unsplash.com/photo-1556881286-fc6915169721?auto=format&fit=crop&w=600&q=80" }
       ]
     }
   ];
-
-  // --- MENU MODAL FUNCTION ---
-  const openMenuModal = (section) => {
-    // This turns the array of food items into a nice HTML list
-    const itemsHtml = section.items.map(item => `<li style="margin-bottom: 8px;">${item}</li>`).join('');
-
-    Swal.fire({
-      title: `<div style="display: flex; flex-direction: column; align-items: center; gap: 10px;"><span style="font-size: 32px;">${section.icon}</span><span style="font-family: serif; font-size: 28px; color: #B59461;">${section.category}</span></div>`,
-      html: `
-        <div style="font-family: sans-serif; color: #555; line-height: 1.6; padding: 10px 20px; text-align: left; max-height: 50vh; overflow-y: auto;">
-          <ul style="list-style-type: none; padding: 0; margin: 0; font-size: 15px; text-align: center;">
-            ${itemsHtml}
-          </ul>
-        </div>
-      `,
-      confirmButtonColor: '#B59461',
-      confirmButtonText: 'Close',
-      background: '#FDFBF7'
-    });
-  };
 
   // --- TIMELINE DATA ARRAY ---
   // We define this here so the JSX below stays clean and easy to read
@@ -980,7 +1111,7 @@ const MainPage = ({ onGoToProgram }) => {
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <Utensils size={32} color="#B59461" style={{ margin: '0 auto 15px auto' }} />
               <h3 style={{ fontSize: '24px', fontFamily: 'serif', color: '#4A4A4A', marginBottom: '5px' }}>මංගල භෝජන සංග්‍රහයේ රසබර තොරතුරු... </h3>
-              <p style={{ color: '#888', fontSize: '14px', marginBottom: '30px' }}>A glimpse into our Golden Love wedding feast.</p>
+              <p style={{ color: '#888', fontSize: '14px', marginBottom: '30px' }}>ස්වර්ණමය ආදරයේ මංගල භෝජන සංග්‍රහයෙන් දසුනක්</p>
               
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
                 {weddingMenu.map((section, index) => (
@@ -988,7 +1119,7 @@ const MainPage = ({ onGoToProgram }) => {
                     key={index} 
                     whileHover={{ scale: 1.02, backgroundColor: '#B59461', color: '#fff' }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => openMenuModal(section)}
+                    onClick={() => setActiveMenuSection(section)} // <-- OPENS THE CAROUSEL
                     style={{ 
                       backgroundColor: '#fff', 
                       border: '1px solid #B59461', 
@@ -1249,6 +1380,10 @@ const MainPage = ({ onGoToProgram }) => {
       {/* --- INJECT THE MODAL --- */}
       {showProgramModal && (
         <ProgramModal onClose={() => setShowProgramModal(false)} />
+      )}
+
+      {activeMenuSection && (
+        <MenuCarouselModal section={activeMenuSection} onClose={() => setActiveMenuSection(null)} />
       )}
 
     </div>
