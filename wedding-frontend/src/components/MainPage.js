@@ -562,16 +562,25 @@ const MainPage = ({ onGoToProgram }) => {
       category: "Signature Shooters",
       icon: "🍹",
       items: [
-        { name: "Pineapple Ginger Basil Shooter", image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80" },
-        { name: "Blue Lime Mint Shooter", image: "https://images.unsplash.com/photo-1587223075055-82e9a937ddff?auto=format&fit=crop&w=600&q=80" },
-        { name: "Watermelon Margarita Shooter", image: "https://images.unsplash.com/photo-1587888637140-849b589c1050?auto=format&fit=crop&w=600&q=80" },
-        { name: "Passion Fruit Lime Mint Shooter", image: "https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=600&q=80" },
-        { name: "Coconut Cream Lime Shooter", image: "https://images.unsplash.com/photo-1550424562-b91c0db935fb?auto=format&fit=crop&w=600&q=80" },
-        { name: "Mixed Berry Shooter", image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80" },
-        { name: "Honey Rosemary Shooter", image: "https://images.unsplash.com/photo-1509378457069-34ba85c33842?auto=format&fit=crop&w=600&q=80" },
-        { name: "Strawberry Mint Kasa Kasa Shooter", image: "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=600&q=80" },
-        { name: "Chili & Lime Shooter", image: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=600&q=80" },
-        { name: "Peach Basil Shooter", image: "https://images.unsplash.com/photo-1556881286-fc6915169721?auto=format&fit=crop&w=600&q=80" }
+        { name: "Pineapple Ginger Basil Shooter", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCYMHNkMz_wgciZwQo_vU8WqnTh_N66qKqKz_df4udTw&s=10" },
+        { name: "Blue Lime Mint Shooter", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCVPdWVT603aB6lx23iZP4IIFb9_FhoAtSF0gkYKuXNgUny8qeFbDw3iw&s=10" },
+        { name: "Watermelon Margarita Shooter", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKLsKPqg0IFgFDmXxg-_bRWa4vN0xrLtv9GatHKffWK6nMPU8C2dJd5CQ&s=10" },
+        { name: "Passion Fruit Lime Mint Shooter", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTow3iegeRwUFBgTh459h_70Mwogvp7C_Ar5mQaTEnriQbz69wSxcT87GO8&s=10" },
+        { name: "Coconut Cream Lime Shooter", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk2bZMbbxUfgX18EUoNTgsVa0Mw3s6LH3tO7IYhP8vP9DZsx2zz9c8ChBT&s=10" },
+        { name: "Mixed Berry Shooter", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOu9BYwRBmJ041NSeZeU7v1ohz_YP2_0vPmM2gKys3XmlTRCGmAFHpPuI&s=10" },
+        { name: "Honey Rosemary Shooter", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9epDPjIJCJ0smjm36vKCZ7XcOZa3GFIpwfS2yRepApVbItvCIItRaObM&s=10" },
+        { name: "Strawberry Mint Kasa Kasa Shooter", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDegWmFb9fiS_HD-RJ4nNpYjees7vpAfVD0f3T0v0ei36B3xZLIIV6ciq7&s=10" },
+        { name: "Chili & Lime Shooter", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkOM7QANWvxpo9XrxcqhCCEWZrXoWtmuJYmFB6m-Up-obYYTrQeitOAA4&s=10" },
+        { name: "Peach Basil Shooter", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKCKZdFIHx4Hd38nZySSm11xZE5geNSNOfo6NgTl5Be7dCLlYE4cac870&s=10" }
+      ]
+    },
+    {
+      category: "The Bar",
+      icon: "🍻",
+      items: [
+        { name: "Jim Beam (Bourbon Whiskey)", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjUFdFKybfTo9py3mxWAVfbEkrzYO6Trg_zoXliKNgDZP4QzbwjVeZx4A&s=10" },
+        { name: "Thambapanni Draft Keg", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT8eggbDk60Uki-8GC3Z0K4W_gBcrScmK-gJn8cFeigwrtksojRTK8vCL-&s=10" },
+        { name: "Lion Ice Beer", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7pinWDwISfXWHe1CgGgquCFfA1Xjfj5IjWSZQy65vlfdYPECum0ztIIc&s=10" }
       ]
     }
   ];
