@@ -391,44 +391,172 @@ const MainPage = ({ onGoToProgram }) => {
     });
   };
 
-  // --- TIMELINE MODAL FUNCTIONS ---
+  // --- SEATING ARRANGEMENT MODAL (LIST & INTERACTIVE MAP TOGGLE) ---
   const showSeating = () => {
-    const generateSeats = (rows, cols) => {
-      let html = '';
-      for (let r = 0; r < rows; r++) {
-        html += '<div style="display: flex; gap: 6px; justify-content: center; margin-bottom: 6px;">';
-        for (let c = 0; c < cols; c++) {
-          html += '<div style="width: 18px; height: 22px; border: 1.5px solid #B59461; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; background-color: #FDFBF7;"></div>';
-        }
-        html += '</div>';
-      }
-      return html;
-    };
+    
+    // The table data, now including X and Y coordinates (percentages) based on your sketch!
+    const seatingData = [
+      { id: 1, group: "Kathri Aracchi Family", x: 15, y: 80 },
+      { id: 2, group: "Rathnapure Family", x: 15, y: 90 },
+      { id: 3, group: "Kathri Aracchi Family", x: 25, y: 80 },
+      { id: 4, group: "Kathri Aracchi Family", x: 25, y: 90 },
+      { id: 5, group: "Bride's Father's Family", x: 25, y: 70 },
+      { id: 6, group: "Bride's Father's Family", x: 15, y: 70 },
+      { id: 7, group: "Bride's Office Friends", x: 38, y: 90 },
+      { id: 8, group: "Elapatha Family", x: 38, y: 75 },
+      { id: 9, group: "Bride Mother's Family", x: 38, y: 65 },
+      { id: 10, group: "Groom's University Friends", x: 42, y: 55 },
+      { id: 11, group: "VIP Table", x: 38, y: 45 },
+      { id: 12, group: "Bride's Father's Friends", x: 52, y: 90 },
+      { id: 13, group: "Bride's School Friends", x: 52, y: 75 },
+      { id: 14, group: "Groom's Brother's Family", x: 52, y: 65 },
+      { id: 15, group: "Groom's Mother's Family", x: 52, y: 55 },
+      { id: 16, group: "CDRD Officers", x: 45, y: 35 }, // Estimated position near 17/23
+      { id: 17, group: "Groom's Father's Family", x: 52, y: 35 },
+      { id: 18, group: "Groom's Father's Friends", x: 52, y: 25 },
+      { id: 19, group: "Bride's Father's Friends", x: 65, y: 90 },
+      { id: 20, group: "Bride's Friends", x: 65, y: 75 },
+      { id: 21, group: "Groom's School Friends", x: 65, y: 65 },
+      { id: 22, group: "Groom's Navy Batchmates", x: 65, y: 55 },
+      { id: 23, group: "CDRD Officers", x: 65, y: 45 },
+      { id: 24, group: "Groom's Father's Friends", x: 65, y: 35 },
+      { id: 25, group: "Groom's Father's Friends", x: 65, y: 25 }
+    ];
 
+    const landmarks = [
+      { name: "Entrance", x: 30, y: 95 },
+      { name: "Settee Back", x: 15, y: 35 },
+      { name: "Head Table", x: 35, y: 15 },
+      { name: "DJ & Photo", x: 45, y: 5 },
+      { name: "Wash Rooms", x: 65, y: 5 },
+      { name: "Dancing Floor", x: 80, y: 20 },
+      { name: "Buffet Area", x: 85, y: 70 }
+    ];
+
+    // 1. Generate the Grid List View HTML (Default)
+    let listHtml = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 10px 0; text-align: center;">';
+    seatingData.forEach(table => {
+      listHtml += `
+        <div style="background: rgba(253, 251, 247, 0.8); padding: 20px 10px; border-radius: 8px; border: 1px solid #EAEAEA; box-shadow: 0 4px 10px rgba(181, 148, 97, 0.05); display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100px;">
+          <h4 style="font-family: 'Great Vibes', serif; color: #B59461; font-size: 24px; margin: 0 0 8px 0; font-weight: normal;">Table ${table.id}</h4>
+          <p style="font-size: 12px; color: #4A4A4A; text-transform: uppercase; letter-spacing: 0.5px; margin: 0; font-weight: bold; line-height: 1.4;">${table.group}</p>
+        </div>
+      `;
+    });
+    listHtml += '</div>';
+
+    // 2. Generate the Interactive Map View HTML
+    let mapHtml = `
+      <div style="position: relative; width: 100%; padding-bottom: 110%; background: #FDFBF7; border: 1px solid #EAEAEA; border-radius: 8px; margin-top: 10px; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+    `;
+    
+    // Add Landmarks to Map
+    landmarks.forEach(lm => {
+      mapHtml += `<div style="position: absolute; left: ${lm.x}%; top: ${lm.y}%; transform: translate(-50%, -50%); padding: 5px 8px; background: rgba(181,148,97,0.1); border: 1px dashed #B59461; border-radius: 4px; font-size: 10px; font-weight: bold; color: #B59461; text-align: center; white-space: nowrap; pointer-events: none;">${lm.name}</div>`;
+    });
+
+    // Add Tables to Map
+    seatingData.forEach(table => {
+      mapHtml += `
+        <div class="interactive-table" data-id="${table.id}" data-group="${table.group}" style="position: absolute; left: ${table.x}%; top: ${table.y}%; transform: translate(-50%, -50%); width: 28px; height: 28px; border-radius: 50%; border: 2px solid #B59461; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; color: #333; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          ${table.id}
+        </div>
+      `;
+    });
+    mapHtml += `</div>`; // Close map container
+
+    // Fire SweetAlert
     Swal.fire({
-      title: '<span style="font-family: serif; font-size: 28px; color: #B59461;">Seating Arrangement</span>',
-      html: `
-        <div style="font-family: sans-serif; color: #555; padding: 0 10px; max-height: 75vh; overflow-y: auto; overflow-x: auto;">
+      title: `
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 5px; margin-bottom: 10px;">
+          <span style="font-family: 'Great Vibes', serif; font-size: 42px; color: #333;">Saara & Anu</span>
+          <span style="font-family: sans-serif; font-size: 16px; color: #888; text-transform: uppercase; letter-spacing: 2px;">Find Your Table</span>
+          <span style="font-family: serif; font-size: 18px; color: #B59461; margin-top: 5px; border-top: 1px solid #B59461; padding-top: 5px;">Hall 03</span>
           
-          <div style="min-width: 650px; padding: 10px 0;">
-            
-            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
-              <div style="flex: 1 1 0;"></div> <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                <div style="width: 20px; height: 24px; border: 1.5px solid #888; border-top-left-radius: 8px; border-top-right-radius: 8px; margin-bottom: 5px;"></div>
-                <div style="background-color: #B59461; color: white; padding: 12px 50px; border-radius: 6px; font-weight: bold; font-size: 13px; letter-spacing: 2px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                  Will be inform you later.
-                </div>
-              </div>
-            </div>
+          <!-- Toggle Buttons -->
+          <div style="display: flex; gap: 10px; margin-top: 15px; background: #f5f5f5; padding: 4px; border-radius: 20px;">
+            <button id="btnListView" style="padding: 6px 16px; border: none; border-radius: 15px; background: #B59461; color: white; font-size: 12px; font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s;">Table List</button>
+            <button id="btnMapView" style="padding: 6px 16px; border: none; border-radius: 15px; background: transparent; color: #666; font-size: 12px; font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s;">Floor Plan</button>
           </div>
         </div>
       `,
-      width: '750px',
+      html: `
+        <div style="max-height: 65vh; overflow-y: auto; overflow-x: hidden; padding: 10px;">
+          
+          <!-- List View Container -->
+          <div id="containerListView">
+            ${listHtml}
+          </div>
+
+          <!-- Map View Container (Hidden by default) -->
+          <div id="containerMapView" style="display: none;">
+            <div id="tableInfoDisplay" style="background: #333; color: #fff; padding: 10px; border-radius: 6px; font-size: 14px; font-weight: bold; margin-bottom: 10px; transition: 0.3s;">
+              Tap any table on the map to see who is seated there!
+            </div>
+            ${mapHtml}
+          </div>
+
+        </div>
+      `,
+      width: '900px',
+      showCloseButton: true,
       confirmButtonColor: '#B59461',
-      confirmButtonText: 'Perfect',
+      confirmButtonText: 'Perfect!',
       background: '#fff',
-      showClass: {
-        popup: 'animate__animated animate__fadeInDown animate__faster'
+      showClass: { popup: 'animate__animated animate__fadeInDown animate__faster' },
+      
+      // JavaScript to make the Toggle and the Map Clicks work!
+      didOpen: () => {
+        const btnList = document.getElementById('btnListView');
+        const btnMap = document.getElementById('btnMapView');
+        const viewList = document.getElementById('containerListView');
+        const viewMap = document.getElementById('containerMapView');
+        const tableInfoDisplay = document.getElementById('tableInfoDisplay');
+        const interactiveTables = document.querySelectorAll('.interactive-table');
+
+        // Toggle to Map View
+        btnMap.addEventListener('click', () => {
+          viewList.style.display = 'none';
+          viewMap.style.display = 'block';
+          btnMap.style.background = '#B59461';
+          btnMap.style.color = 'white';
+          btnList.style.background = 'transparent';
+          btnList.style.color = '#666';
+        });
+
+        // Toggle to List View
+        btnList.addEventListener('click', () => {
+          viewMap.style.display = 'none';
+          viewList.style.display = 'block';
+          btnList.style.background = '#B59461';
+          btnList.style.color = 'white';
+          btnMap.style.background = 'transparent';
+          btnMap.style.color = '#666';
+        });
+
+        // Click a table on the map
+        interactiveTables.forEach(tableCircle => {
+          tableCircle.addEventListener('click', (e) => {
+            // Reset all tables to white
+            interactiveTables.forEach(t => {
+              t.style.background = '#fff';
+              t.style.color = '#333';
+              t.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+            
+            // Highlight the clicked table
+            const target = e.target;
+            target.style.background = '#B59461';
+            target.style.color = '#fff';
+            target.style.transform = 'translate(-50%, -50%) scale(1.2)'; // Make it pop slightly
+            
+            // Update the display banner with the group name
+            const tableId = target.getAttribute('data-id');
+            const groupName = target.getAttribute('data-group');
+            tableInfoDisplay.innerHTML = `<span style="color: #B59461;">Table ${tableId}:</span> ${groupName}`;
+            tableInfoDisplay.style.background = '#222';
+          });
+        });
       }
     });
   };
