@@ -483,6 +483,9 @@ const MainPage = ({ onGoToProgram }) => {
              <div style="font-size: 9px; font-weight: bold; color: #B59461; text-align: center;">SETTEE<br/>BACK</div>
         </div>
 
+        <!-- Red Carpet Path (Straight down the aisle between tables) -->
+        <div style="position: absolute; left: 31.5%; bottom: 4%; width: 3%; height: 55%; background: rgba(178, 34, 34, 0.85); transform: translateX(-50%); border-left: 2px dashed rgba(212, 175, 55, 0.8); border-right: 2px dashed rgba(212, 175, 55, 0.8); z-index: 0; border-radius: 2px; box-shadow: inset 0 0 5px rgba(0,0,0,0.2);"></div>
+
         <!-- Head Table -->
         <div style="position: absolute; left: 16%; top: 12%; width: 30%; height: 7%; background: rgba(181,148,97,0.25); border: 2px solid #B59461; display: flex; align-items: center; justify-content: center; transform: rotate(-30deg); z-index: 1;">
              <div style="font-size: 9px; font-weight: bold; color: #B59461;">HEAD TABLE</div>
@@ -520,8 +523,8 @@ const MainPage = ({ onGoToProgram }) => {
           
           <!-- Toggle Buttons -->
           <div style="display: flex; gap: 10px; margin-top: 15px; background: #f5f5f5; padding: 4px; border-radius: 20px;">
-            <button id="btnListView" style="padding: 6px 16px; border: none; border-radius: 15px; background: #B59461; color: white; font-size: 12px; font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s;">Table List</button>
-            <button id="btnMapView" style="padding: 6px 16px; border: none; border-radius: 15px; background: transparent; color: #666; font-size: 12px; font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s;">Floor Plan</button>
+            <button id="btnListView" style="padding: 6px 16px; border: none; border-radius: 15px; background: transparent; color: #666; font-size: 12px; font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s;">Table List</button>
+            <button id="btnMapView" style="padding: 6px 16px; border: none; border-radius: 15px; background: #B59461; color: white; font-size: 12px; font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s;">Floor Plan</button>
           </div>
         </div>
       `,
@@ -529,12 +532,12 @@ const MainPage = ({ onGoToProgram }) => {
         <div style="max-height: 65vh; overflow-y: auto; overflow-x: hidden; padding: 10px;">
           
           <!-- List View Container -->
-          <div id="containerListView">
+          <div id="containerListView" style="display: none;">
             ${listHtml}
           </div>
 
-          <!-- Map View Container (Hidden by default) -->
-          <div id="containerMapView" style="display: none;">
+          <!-- Map View Container -->
+          <div id="containerMapView">
             <div id="tableInfoDisplay" style="background: #333; color: #fff; padding: 10px; border-radius: 6px; font-size: 14px; font-weight: bold; margin-bottom: 10px; transition: 0.3s;">
               Tap any table on the map to see who is seated there!
             </div>
