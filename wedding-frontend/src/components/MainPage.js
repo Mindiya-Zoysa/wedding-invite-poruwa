@@ -423,16 +423,6 @@ const MainPage = ({ onGoToProgram }) => {
       { id: 25, group: "Groom's Father's Friends", x: 65, y: 25 }
     ];
 
-    const landmarks = [
-      { name: "Entrance", x: 30, y: 95 },
-      { name: "Settee Back", x: 15, y: 35 },
-      { name: "Head Table", x: 35, y: 15 },
-      { name: "DJ & Photo", x: 45, y: 5 },
-      { name: "Wash Rooms", x: 65, y: 5 },
-      { name: "Dancing Floor", x: 80, y: 20 },
-      { name: "Buffet Area", x: 85, y: 70 }
-    ];
-
     // 1. Generate the Grid List View HTML (Default)
     let listHtml = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 10px 0; text-align: center;">';
     seatingData.forEach(table => {
@@ -445,21 +435,76 @@ const MainPage = ({ onGoToProgram }) => {
     });
     listHtml += '</div>';
 
-    // 2. Generate the Interactive Map View HTML
+    // 2. Generate the Interactive Architectural Map View HTML
     let mapHtml = `
-      <div style="position: relative; width: 100%; padding-bottom: 110%; background: #FDFBF7; border: 1px solid #EAEAEA; border-radius: 8px; margin-top: 10px; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
-    `;
-    
-    // Add Landmarks to Map
-    landmarks.forEach(lm => {
-      mapHtml += `<div style="position: absolute; left: ${lm.x}%; top: ${lm.y}%; transform: translate(-50%, -50%); padding: 5px 8px; background: rgba(181,148,97,0.1); border: 1px dashed #B59461; border-radius: 4px; font-size: 10px; font-weight: bold; color: #B59461; text-align: center; white-space: nowrap; pointer-events: none;">${lm.name}</div>`;
-    });
+      <style>
+        /* Pulse animation for the wedding tables */
+        @keyframes tablePulse {
+          0% { box-shadow: 0 0 0 0 rgba(181, 148, 97, 0.5); }
+          70% { box-shadow: 0 0 0 8px rgba(181, 148, 97, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(181, 148, 97, 0); }
+        }
+      </style>
+      <div style="position: relative; width: 100%; padding-bottom: 110%; background: #FAFAFA; margin-top: 10px; overflow: hidden; box-shadow: inset 0 0 15px rgba(0,0,0,0.05); border-radius: 4px; border-left: 4px solid #4A4A4A; border-bottom: 4px solid #4A4A4A;">
+        
+        <!-- Perimeter Right & Top Walls (Perfectly connected) -->
+        <div style="position: absolute; right: 0; bottom: 0; height: 78.5%; width: 4px; background: #4A4A4A; z-index: 2;"></div>
+        <div style="position: absolute; left: 0; top: 0; width: 45%; height: 4px; background: #4A4A4A; z-index: 2;"></div>
+        <div style="position: absolute; left: 45%; top: 0; width: 71%; height: 4px; background: #4A4A4A; transform-origin: top left; transform: rotate(23deg); z-index: 2;"></div>
 
-    // Add Tables to Map
+        <!-- Entrance Area -->
+        <div style="position: absolute; left: 22%; bottom: 0; width: 20%; height: 5%; border-top: 3px solid #4A4A4A; background: #F3F3F3; display: flex; align-items: center; justify-content: center; z-index: 1;">
+            <div style="font-size: 10px; font-weight: bold; color: #4A4A4A; letter-spacing: 1px;">ENTRANCE</div>
+            <!-- Dashed Doors -->
+            <div style="position: absolute; top: -3px; left: 25%; width: 50%; border-top: 4px dashed #B59461;"></div>
+        </div>
+
+        <!-- Buffet Area -->
+        <div style="position: absolute; right: 0; bottom: 15%; width: 28%; height: 22%; border-top: 3px solid #4A4A4A; border-bottom: 3px solid #4A4A4A; background: #F3F3F3; display: flex; align-items: center; justify-content: center;">
+            <div style="font-size: 10px; font-weight: bold; color: #4A4A4A; text-align: center;">BUFFET<br/>AREA</div>
+        </div>
+
+        <!-- Wash Rooms (Tucked perfectly into the new 23-degree gap) -->
+        <div style="position: absolute; right: 0; top: 0; width: 55%; height: 21.5%; background: #F3F3F3; clip-path: polygon(100% 0, 100% 100%, 0 0); z-index: 1;">
+             <div style="position: absolute; top: 12%; right: 8%; font-size: 10px; font-weight: bold; color: #4A4A4A; text-align: right;">WASH<br/>ROOMS</div>
+        </div>
+        
+        <!-- Wash Room Door (Overlapping the new 23-degree diagonal wall) -->
+        <div style="position: absolute; left: 68%; top: 9%; width: 14%; height: 6px; background: #F3F3F3; transform: rotate(23deg); z-index: 3;"></div>
+        <div style="position: absolute; left: 68%; top: 9.5%; width: 14%; border-top: 4px dashed #B59461; transform: rotate(23deg); z-index: 4;"></div>
+
+        <!-- Poruwa -->
+        <div style="position: absolute; right: 6%; bottom: 40%; width: 5%; height: 14%; border: 2px solid #B59461; background: rgba(181,148,97,0.15); display: flex; align-items: center; justify-content: center; border-radius: 2px;">
+            <div style="font-size: 8px; font-weight: bold; color: #B59461; writing-mode: vertical-rl; letter-spacing: 1px;">PORUWA</div>
+        </div>
+
+        <!-- Settee Back -->
+        <div style="position: absolute; left: 7%; top: 30%; width: 18%; height: 8%; background: rgba(181,148,97,0.25); border: 2px solid #B59461; display: flex; align-items: center; justify-content: center; transform: rotate(-30deg); z-index: 1;">
+             <div style="font-size: 9px; font-weight: bold; color: #B59461; text-align: center;">SETTEE<br/>BACK</div>
+        </div>
+
+        <!-- Head Table -->
+        <div style="position: absolute; left: 16%; top: 12%; width: 30%; height: 7%; background: rgba(181,148,97,0.25); border: 2px solid #B59461; display: flex; align-items: center; justify-content: center; transform: rotate(-30deg); z-index: 1;">
+             <div style="font-size: 9px; font-weight: bold; color: #B59461;">HEAD TABLE</div>
+        </div>
+
+        <!-- Dancing Floor -->
+        <div style="position: absolute; right: 4%; top: 25%; width: 22%; height: 15%; background: rgba(220,150,150,0.15); border: 2px solid #c97b7b; display: flex; align-items: center; justify-content: center;">
+             <div style="font-size: 10px; font-weight: bold; color: #a35050; text-align: center;">DANCING<br/>FLOOR</div>
+        </div>
+    `;
+
+    // Add Animated Wedding Tables to Map
     seatingData.forEach(table => {
       mapHtml += `
-        <div class="interactive-table" data-id="${table.id}" data-group="${table.group}" style="position: absolute; left: ${table.x}%; top: ${table.y}%; transform: translate(-50%, -50%); width: 28px; height: 28px; border-radius: 50%; border: 2px solid #B59461; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; color: #333; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-          ${table.id}
+        <div class="interactive-table" data-id="${table.id}" data-group="${table.group}" style="position: absolute; left: ${table.x}%; top: ${table.y}%; transform: translate(-50%, -50%); width: 28px; height: 28px; border-radius: 50%; border: 2px solid #D4AF37; background: radial-gradient(circle, #fff 40%, #fdfbf7 100%); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; color: #333; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.15); animation: tablePulse 2s infinite; z-index: 2;">
+          <span style="pointer-events: none; z-index: 2;">${table.id}</span>
+          
+          <!-- CSS 'Chairs' surrounding the table -->
+          <div style="position: absolute; top: -4px; width: 6px; height: 3px; background: #D4AF37; border-radius: 2px 2px 0 0; pointer-events: none;"></div>
+          <div style="position: absolute; bottom: -4px; width: 6px; height: 3px; background: #D4AF37; border-radius: 0 0 2px 2px; pointer-events: none;"></div>
+          <div style="position: absolute; left: -4px; width: 3px; height: 6px; background: #D4AF37; border-radius: 2px 0 0 2px; pointer-events: none;"></div>
+          <div style="position: absolute; right: -4px; width: 3px; height: 6px; background: #D4AF37; border-radius: 0 2px 2px 0; pointer-events: none;"></div>
         </div>
       `;
     });
